@@ -1,0 +1,4 @@
+// Games
+gameId // partition key, string
+gameTitle // sort key, string
+
