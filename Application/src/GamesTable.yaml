@@ -1,0 +1,18 @@
+Resources:
+  GamesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "Games"
+      AttributeDefinitions:
+        - AttributeName: "gameId"
+          AttributeType: "S"
+        - AttributeName: "gameTitle"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "gameId"
+          KeyType: "HASH"
+        - AttributeName: "gameTitle"
+          KeyType: "RANGE"
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: false
+      BillingMode: PAY_PER_REQUEST
