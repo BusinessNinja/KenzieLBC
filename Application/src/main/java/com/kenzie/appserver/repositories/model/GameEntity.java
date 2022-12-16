@@ -10,8 +10,6 @@ import org.springframework.data.annotation.Id;
 public class GameEntity {
     @Id
     private GamePrimaryKey primaryKey;
-    private String gameId;
-    private String gameTitle;
     private String genre;
     private String weightOfGame;
     private String conditionOfGame;

@@ -18,9 +18,9 @@ public class GameService {
     public Game findById(String id) {
         Game gameFromBackend = gameRepository
                 .findById(id)
-                .map(comment -> new Game(game.getId(), game.getOwner(), game.getTitle(),
-                        game.getContent(), game.getContent(), game.getContent(),
-                        game.getContent(), game.getContent()))
+                .map(game -> new Game(game.getGameId(), game.getGameTitle(), game.getGenre(),
+                        game.getWeightOfGame(), game.getConditionOfGame(), game.getMaturityLevel(),
+                        game.getNumberOfPlayers(), game.getPlaytimeInMinutes()))
                 .orElse(null);
         return gameFromBackend;
     }
@@ -29,8 +29,8 @@ public class GameService {
         List<Game> games = new ArrayList<>();
         gameRepository
                 .findAll()
-                .forEach(comment -> games.add(new Game(comment.getId(), comment.getOwner(), comment.getTitle(), comment.getContent(),
-                        comment.getContent(), comment.getContent(), comment.getContent(), comment.getContent())));
+                .forEach(game -> games.add(new Game(game.getGameId(), game.getGameTitle(), game.getGenre(), game.getWeightOfGame(),
+                        game.getConditionOfGame(), game.getMaturityLevel(), game.getNumberOfPlayers(), game.getPlaytimeInMinutes())));
         return games;
     }
 
@@ -44,7 +44,7 @@ public class GameService {
         gameRecord.setMaturityLevel(game.getMaturityLevel());
         gameRecord.setNumberOfPlayers(game.getNumberOfPlayers());
         gameRecord.setPlaytimeInMinutes(game.getPlaytimeInMinutes());
-        gameRecord.save(gameRecord);
+        gameRepository.save(gameRecord);
         return game;
     }
 }
