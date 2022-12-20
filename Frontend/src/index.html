@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="examplePage.js"></script>
+    <script type="text/javascript" src="gamePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="background">
     <header class="header" id="header">
         <div class="site-title">
-            <a class="header_home" href="index.html">Example App</a>
+            <a class="header_home" href="index.html">iAmBoard</a>
         </div>
     </header>
     <div class="card">
-        <h2>Create Example</h2>
-        <form class="card-content" id="create-form">
+        <h2>Add Game</h2>
+        <form class="card-content" id="create-game-form">
             <p class="form-field">
-                <label>Name</label>
-                <input type="text" required class="validated-field" id="create-name-field">
+                <label>Title</label>
+                <input type="text" required class="validated-field" id="create-game-gametitle">
+                <label>Genre</label>
+                <input type="text" required class="validated-field" id="create-game-genre">
+                <label>Weight of Game</label>
+                <input type="text" required class="validated-field" id="create-game-weightofgame">
+                <label>Condition of Game</label>
+                <input type="text" required class="validated-field" id="create-game-conditionofgame">
+                <label>Maturity level</label>
+                <input type="text" required class="validated-field" id="create-game-maturitylevel">
+                <label># of players</label>
+                <input type="text" required class="validated-field" id="create-game-numberofplayers">
+                <label>Play time</label>
+                <input type="text" required class="validated-field" id="create-game-playtimeinminutes">
             </p>
-            <button type="submit">Create</button>
+            <button type="submit">Add</button>
         </form>
     </div>
     <div class="card">
