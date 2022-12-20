@@ -5,8 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 
 public class GamePrimaryKey {
-
-
     private String gameId;
     private String gameTitle;
     public GamePrimaryKey() {}

@@ -1,12 +1,13 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.GameRepository;
+import com.kenzie.appserver.repositories.model.GamePrimaryKey;
 import com.kenzie.appserver.repositories.model.GameRecord;
 import com.kenzie.appserver.service.model.Game;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 @Service
@@ -15,14 +16,13 @@ public class GameService {
 
     public GameService(GameRepository gameRepository) { this.gameRepository = gameRepository; }
 
-    public Game findById(String id) {
-        Game gameFromBackend = gameRepository
+    public Game findById(GamePrimaryKey id) {
+        return gameRepository
                 .findById(id)
                 .map(game -> new Game(game.getGameId(), game.getGameTitle(), game.getGenre(),
                         game.getWeightOfGame(), game.getConditionOfGame(), game.getMaturityLevel(),
                         game.getNumberOfPlayers(), game.getPlaytimeInMinutes()))
                 .orElse(null);
-        return gameFromBackend;
     }
 
     public List<Game> findAll() {

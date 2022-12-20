@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.GameCreateRequest;
 import com.kenzie.appserver.controller.model.GameResponse;
+import com.kenzie.appserver.repositories.model.GamePrimaryKey;
 import com.kenzie.appserver.service.GameService;
 import com.kenzie.appserver.service.model.Game;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class GameController {
 
     private GameService gameService;
 
-    GameController(GameService commentService) {
-        this.gameService = commentService;
+    GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
     @GetMapping("/{gameId}")
-    public ResponseEntity<GameResponse> getComment(@PathVariable("gameId") String id) {
+    public ResponseEntity<GameResponse> getGame(@PathVariable("gameId") GamePrimaryKey gameId) {
 
-        Game game = gameService.findById(id);
+        Game game = gameService.findById(gameId);
         if (game == null) {
             return ResponseEntity.notFound().build();
         }
@@ -35,16 +36,16 @@ public class GameController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<GameResponse>> getComment() {
+    public ResponseEntity<List<GameResponse>> getGame() {
 
-        List<Game> comments = gameService.findAll();
+        List<Game> games = gameService.findAll();
 
-        List<GameResponse> responses = comments.stream().map(comment -> gameToResponse(comment)).collect(Collectors.toList());
+        List<GameResponse> responses = games.stream().map(game -> gameToResponse(game)).collect(Collectors.toList());
 
         return ResponseEntity.ok(responses);
     }
 
-    @PostMapping
+    @PostMapping("/new")//Suggestion from Nathan
     public ResponseEntity<GameResponse> addNewGame(@RequestBody GameCreateRequest gameCreateRequest) {
         Game game = new Game(randomUUID().toString(), gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
                 gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes());

@@ -8,7 +8,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    gamePage: path.resolve(__dirname, 'src', 'pages', 'gamePage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
