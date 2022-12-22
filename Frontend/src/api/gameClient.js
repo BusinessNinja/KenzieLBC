@@ -27,16 +27,16 @@ export default class GameClient extends BaseClass {
 
     async getGame(id, errorCallback) {
         try {
-            const response =  this.client.get(`/game/${id}`);
+            const response = await this.client.get(`/game/${id}`);
             return response.data;
         } catch (error) {
-            this.handleError("getGame, error, errorCallback")
+            this.handleError("getGame", error, errorCallback)
         }
     }
 
     async getAllGames(errorCallback) {
         try {
-            const response =  this.client.get("/game/all");
+            const response = await this.client.get("/game/all");
             return response.data;
         } catch (error) {
             this.handleError("getAllGames", error, errorCallback)
@@ -46,7 +46,7 @@ export default class GameClient extends BaseClass {
     async createGame(gameTitle, genre, weightOfGame, conditionOfGame, maturityLevel,
                      numberOfPlayers, playtimeInMinutes, errorCallback) {
         try {
-            const response =  this.client.post("/game/new", {
+            const response = await this.client.post("/game/new", {
                 "gameTitle": gameTitle,
                 "genre": genre,
                 "weightOfGame": weightOfGame,
@@ -55,6 +55,7 @@ export default class GameClient extends BaseClass {
                 "numberOfPlayers": numberOfPlayers,
                 "playtimeInMinutes": playtimeInMinutes
             });
+            console.log(response);
             return response.data;
         } catch (error) {
             this.handleError("createGame", error, errorCallback);
