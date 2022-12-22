@@ -14,13 +14,10 @@ class GamePage extends BaseClass {
      * Once the page has loaded, set up the event handlers
      */
     async mount() {
-        // document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
-        document.getElementById('create-game-form').addEventListener('submit', this.onCreate);
         this.client = new GameClient();
-
+        document.getElementById("create-game-form").addEventListener("submit", this.onCreate);
 
         this.dataStore.addChangeListener(this.renderGames)
-        this.onGetGames();
     }
 
     /** Render Methods -----------------------------------------------------------------------------------------------*/
@@ -30,58 +27,76 @@ class GamePage extends BaseClass {
         const games = this.dataStore.get("games");
 
         let content = "<ul>";
-        for (let game of games) {
-            content += `
-                <li>
-                <h3>${game.gameTitle}</h3>
-                <h3>${game.genre}</h3>
-                <h3>${game.weightOfGame}</h3>
-                <h3>${game.conditionOfGame}</h3>
-                <h3>${game.maturityLevel}</h3>
-                <h3>${game.numberOfPlayers}</h3>
-                <h3>${game.playtimeInMinutes}</h3>
-                </li>
-            `
+        if (games) {
+            games.forEach(game => {
+                content += `<li>${game.gameTitle}</li>`
+                content += `<li>${game.genre}</li>`
+                content += `<li>${game.weightOfGame}</li>`
+                content += `<li>${game.conditionOfGame}</li>`
+                content += `<li>${game.maturityLevel}</li>`
+                content += `<li>${game.numberOfPlayers}</li>`
+                content += `<li>${game.playtimeInMinutes}</li>`
+            });
         }
         content += "</ul>";
-        if (games.length > 0) {
-            resultArea.innerHTML = content;
-        } else {
-            resultArea.innerHTML = "No Item";
-        }
-
+        resultArea.innerHTML = content;
     }
 
     /** Event Handlers -----------------------------------------------------------------------------------------------*/
 
     async onGetGames() {
-        let result =  this.client.getAllGames(this.errorHandler);
-        this.dataStore.set("games", result);
+        const games = await this.client.getAllGames(this.errorHandler);
+        this.dataStore.set("games", games);
     }
 
     async onCreate(game) {
         // Prevent the page from refreshing on form submit
         game.preventDefault();
 
-        let gameTitle = document.getElementById("create-game-gametitle").value;
-        let genre = document.getElementById("create-game-genre").value;
-        let weightOfGame = document.getElementById("create-game-weightofgame").value;
-        let conditionOfGame = document.getElementById("create-game-conditionofgame").value;
-        let maturityLevel = document.getElementById("create-game-maturitylevel").value;
-        let numberOfPlayers = document.getElementById("create-game-numberofplayers").value;
-        let playtimeInMinutes = document.getElementById("create-game-playtimeinminutes").value;
+        // Get the form data
+        const formData = new FormData(game.target);
+        const gameTitle = formData.get("gameTitle");
+        const genre = formData.get("genre");
+        const weightOfGame = formData.get("weightOfGame");
+        const conditionOfGame = formData.get("conditionOfGame");
+        const maturityLevel = formData.get("maturityLevel");
+        const numberOfPlayers = formData.get("numberOfPlayers");
+        const playtimeInMinutes = formData.get("playtimeInMinutes");
 
+        // Create the game
+        const newGame = {
+            gameTitle,
+            genre,
+            weightOfGame,
+            conditionOfGame,
+            maturityLevel,
+            numberOfPlayers,
+            playtimeInMinutes
+        };
 
-        const createdGame =  this.client.createGame(gameTitle, genre, weightOfGame, conditionOfGame,
-            maturityLevel, numberOfPlayers, playtimeInMinutes, this.errorHandler);
-
+        const createdGame = this.client.createGame(gameTitle,
+            genre,
+            weightOfGame,
+            conditionOfGame,
+            maturityLevel,
+            numberOfPlayers,
+            playtimeInMinutes, this.errorHandler);
 
         if (createdGame) {
-            this.showMessage(`Added a game!`)
+            this.showMessage("Added a game!")
         } else {
             this.errorHandler("Error creating!  Try again...");
         }
-        this.onGetGames();
+        await this.onGetGames();
+
+        // Clear the form
+        game.target.reset();
+
+        // Focus the game title field
+        document.getElementById("gameTitle").focus();
+
+        // Prevent the form from submitting
+        return false;
     }
 }
 
@@ -93,4 +108,4 @@ const main = async () => {
     await gamePage.mount();
 };
 
-window.addEventListener('DOMContentLoaded', main);
+window.addEventListener("DOMContentLoaded", main);
