@@ -54,14 +54,13 @@ class GamePage extends BaseClass {
         game.preventDefault();
 
         // Get the form data
-        const formData = new FormData(game.target);
-        const gameTitle = formData.get("gameTitle");
-        const genre = formData.get("genre");
-        const weightOfGame = formData.get("weightOfGame");
-        const conditionOfGame = formData.get("conditionOfGame");
-        const maturityLevel = formData.get("maturityLevel");
-        const numberOfPlayers = formData.get("numberOfPlayers");
-        const playtimeInMinutes = formData.get("playtimeInMinutes");
+        const gameTitle = document.getElementById("create-game-gametitle").value;
+        const genre = document.getElementById("create-game-genre").value;
+        const weightOfGame = document.getElementById("create-game-weightofgame").value;
+        const conditionOfGame = document.getElementById("create-game-conditionofgame").value;
+        const maturityLevel = document.getElementById("create-game-maturitylevel").value;
+        const numberOfPlayers = document.getElementById("create-game-numberofplayers").value;
+        const playtimeInMinutes = document.getElementById("create-game-playtimeinminutes").value;
 
         // Create the game
         const newGame = {
@@ -74,7 +73,9 @@ class GamePage extends BaseClass {
             playtimeInMinutes
         };
 
-        const createdGame = this.client.createGame(gameTitle,
+        console.log(newGame)
+
+        const createdGame = await this.client.createGame(gameTitle,
             genre,
             weightOfGame,
             conditionOfGame,
@@ -93,7 +94,7 @@ class GamePage extends BaseClass {
         game.target.reset();
 
         // Focus the game title field
-        document.getElementById("gameTitle").focus();
+        document.getElementById("gameTitle");
 
         // Prevent the form from submitting
         return false;

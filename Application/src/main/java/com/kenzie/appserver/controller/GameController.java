@@ -47,8 +47,17 @@ public class GameController {
 
     @PostMapping("/new")//Suggestion from Nathan
     public ResponseEntity<GameResponse> addNewGame(@RequestBody GameCreateRequest gameCreateRequest) {
-        Game game = new Game(randomUUID().toString(), gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
+
+        System.out.println(gameCreateRequest.getGameId() + gameCreateRequest.getGameTitle());
+        if(!gameCreateRequest.getGameTitle().equals("string")){
+            throw new RuntimeException("For testing purposes");
+        }
+
+        Game game = new Game("A string", gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
                 gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes());
+
+        System.out.println(game.toString());
+
         gameService.addNewGame(game);
 
         GameResponse gameResponse = new GameResponse();
