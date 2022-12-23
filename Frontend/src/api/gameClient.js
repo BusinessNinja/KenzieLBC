@@ -64,6 +64,7 @@ export default class GameClient extends BaseClass {
 
     /**
      * Helper method to log the error and run any error functions.
+     * @param method
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.
      */

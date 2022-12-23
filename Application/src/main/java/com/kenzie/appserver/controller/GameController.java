@@ -49,11 +49,11 @@ public class GameController {
     public ResponseEntity<GameResponse> addNewGame(@RequestBody GameCreateRequest gameCreateRequest) {
 
         System.out.println(gameCreateRequest.getGameId() + gameCreateRequest.getGameTitle());
-        if(!gameCreateRequest.getGameTitle().equals("string")){
-            throw new RuntimeException("For testing purposes");
-        }
+//        if(!gameCreateRequest.getGameTitle().equals()){
+//            throw new RuntimeException("For testing purposes");
+//        }
 
-        Game game = new Game("A string", gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
+        Game game = new Game(randomUUID().toString(), gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
                 gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes());
 
         System.out.println(game.toString());

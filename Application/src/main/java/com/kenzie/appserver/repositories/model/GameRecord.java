@@ -7,9 +7,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import org.springframework.data.annotation.Id;
 @DynamoDBTable(tableName = "Games")
 public class GameRecord {
-
-//    private GamePrimaryKey primaryKey;
     @Id
+    private GamePrimaryKey primaryKey;
     private String gameId;
     private String gameTitle;
     private String genre;
@@ -21,28 +20,28 @@ public class GameRecord {
 
     @DynamoDBHashKey(attributeName = "gameId")
     public String getGameId() {
-        if (gameId != null)
-            return gameId;
+        if (primaryKey != null)
+            return primaryKey.getGameId();
         return null;
     }
 
     public void setGameId(String gameId) {
-        if (gameId == null)
-            this.gameId = gameId;
-//        primaryKey.setGameId(gameId);
+        if (primaryKey == null)
+            primaryKey = new GamePrimaryKey();
+        primaryKey.setGameId(gameId);
     }
 
     @DynamoDBRangeKey(attributeName = "gameTitle")
     public String getGameTitle() {
-        if (gameId != null)
-            return gameId;
+        if (primaryKey != null)
+            return primaryKey.getGameTitle();
         return null;
     }
 
     public void setGameTitle(String gameTitle) {
-        if (gameId == null)
-            this.gameId = gameId;
-//        primaryKey.setGameTitle(gameTitle);
+        if (primaryKey == null)
+            primaryKey = new GamePrimaryKey();
+        primaryKey.setGameTitle(gameTitle);
     }
 
     @DynamoDBAttribute(attributeName = "genre")
