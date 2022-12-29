@@ -16,7 +16,7 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/game")
-public class GameController {
+public class GameController{
 
     private GameService gameService;
 
@@ -47,15 +47,6 @@ public class GameController {
 
     @PostMapping("/new")//Suggestion from Nathan
     public ResponseEntity<GameResponse> addNewGame(@RequestBody GameCreateRequest gameCreateRequest) {
-
-        System.out.println(gameCreateRequest.getGameId() + gameCreateRequest.getGameTitle());
-//<<<<<<< kyle
-//        if(!gameCreateRequest.getGameTitle().equals("string")){
-//=======
-//        if(!gameCreateRequest.getGameTitle().equals()){
-//>>>>>>> main
-//            throw new RuntimeException("For testing purposes");
-//        }
 
         Game game = new Game(randomUUID().toString(), gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
                 gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes());
