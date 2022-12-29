@@ -14,8 +14,8 @@
 
 # Fill out the following values
 # The path of your repo on github. Don't include the whole URL, just the part after github.com/KenzieAcademy-SoftwareEngineering/
-export GITHUB_TOKEN='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'
-export GITHUB_USERNAME=kenziejeremyg
+export GITHUB_TOKEN='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'
+export GITHUB_USERNAME=businessninja
 export LBC_GROUP_NAME=iamboard
 export LBC_REPO_NAME=ata-lbc-project-KenzieJeremyG
 
