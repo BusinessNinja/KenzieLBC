@@ -2,13 +2,13 @@ package com.kenzie.appserver.service.model;
 
 public class Game {
     private final String gameId;
-    private final String gameTitle;
-    private final String genre;
-    private final String weightOfGame;
-    private final String conditionOfGame;
-    private final String maturityLevel;
-    private final Integer numberOfPlayers;
-    private final Integer playtimeInMinutes;
+    private String gameTitle;
+    private String genre;
+    private String weightOfGame;
+    private String conditionOfGame;
+    private String maturityLevel;
+    private Integer numberOfPlayers;
+    private Integer playtimeInMinutes;
 
     public Game(String gameId, String gameTitle, String genre, String weightOfGame, String conditionOfGame, String maturityLevel, Integer numberOfPlayers, Integer playtimeInMinutes) {
         this.gameId = gameId;
@@ -36,4 +36,33 @@ public class Game {
     public Integer getNumberOfPlayers() { return this.numberOfPlayers; }
 
     public Integer getPlaytimeInMinutes() { return this.playtimeInMinutes; }
+
+
+    public void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setWeightOfGame(String weightOfGame) {
+        this.weightOfGame = weightOfGame;
+    }
+
+    public void setConditionOfGame(String conditionOfGame) {
+        this.conditionOfGame = conditionOfGame;
+    }
+
+    public void setMaturityLevel(String maturityLevel) {
+        this.maturityLevel = maturityLevel;
+    }
+
+    public void setNumberOfPlayers(Integer numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
+        this.playtimeInMinutes = playtimeInMinutes;
+    }
 }
