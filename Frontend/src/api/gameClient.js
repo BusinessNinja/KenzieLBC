@@ -44,7 +44,7 @@ export default class GameClient extends BaseClass {
     }
 
     async createGame(gameTitle, genre, weightOfGame, conditionOfGame, maturityLevel,
-                     numberOfPlayers, playtimeInMinutes, errorCallback) {
+                     numberOfPlayers, playtimeInMinutes, tags, errorCallback) {
         try {
             const response = await this.client.post("/game/new", {
                 "gameTitle": gameTitle,
@@ -53,7 +53,8 @@ export default class GameClient extends BaseClass {
                 "conditionOfGame": conditionOfGame,
                 "maturityLevel": maturityLevel,
                 "numberOfPlayers": numberOfPlayers,
-                "playtimeInMinutes": playtimeInMinutes
+                "playtimeInMinutes": playtimeInMinutes,
+                "tags": tags
             });
             console.log(response);
             return response.data;
