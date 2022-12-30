@@ -47,4 +47,19 @@ public class GameService {
         gameRepository.save(gameRecord);
         return game;
     }
+    public Game updateGame(Game game) {
+        if (gameRepository.existsById(new GamePrimaryKey(game.getGameId()))) {
+            GameRecord gameRecord = new GameRecord();
+            gameRecord.setGameTitle(game.getGameTitle());
+            gameRecord.setGenre(game.getGenre());
+            gameRecord.setWeightOfGame(game.getWeightOfGame());
+            gameRecord.setConditionOfGame(game.getConditionOfGame());
+            gameRecord.setMaturityLevel(game.getMaturityLevel());
+            gameRecord.setNumberOfPlayers(game.getNumberOfPlayers());
+            gameRecord.setPlaytimeInMinutes(game.getPlaytimeInMinutes());
+//            gameRecord.setTags(game.getTags());
+            gameRepository.save(gameRecord);
+        }
+        return game;
+    }
 }

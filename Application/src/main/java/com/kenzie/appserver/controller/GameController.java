@@ -69,6 +69,23 @@ public class GameController {
         return ResponseEntity.created(URI.create("/game/" + gameResponse.getGameId())).body(gameResponse);
     }
 
+
+    @PutMapping("/{gameId}")
+    public ResponseEntity.BodyBuilder editGame(@RequestBody Game updatedGame, @PathVariable("gameId") GamePrimaryKey gameId) {
+        Game game = gameService.findById(gameId);
+        game.setGameTitle(updatedGame.getGameTitle());
+        game.setGenre(updatedGame.getGenre());
+        game.setWeightOfGame(updatedGame.getWeightOfGame());
+        game.setConditionOfGame(updatedGame.getConditionOfGame());
+        game.setMaturityLevel(updatedGame.getMaturityLevel());
+        game.setNumberOfPlayers(updatedGame.getNumberOfPlayers());
+        game.setPlaytimeInMinutes(updatedGame.getPlaytimeInMinutes());
+        gameService.updateGame(game);
+        return ResponseEntity.ok();
+    }
+
+
+
     private GameResponse gameToResponse(Game game) {
         GameResponse gameResponse = new GameResponse();
         gameResponse.setGameId(game.getGameId());

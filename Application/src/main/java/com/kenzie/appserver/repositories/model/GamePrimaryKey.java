@@ -14,6 +14,10 @@ public class GamePrimaryKey {
         this.gameTitle = gameTitle;
     }
 
+    public GamePrimaryKey(String gameId) {
+    }
+
+
     @DynamoDBHashKey(attributeName = "gameId")
     public String getGameId() {
         return gameId;
