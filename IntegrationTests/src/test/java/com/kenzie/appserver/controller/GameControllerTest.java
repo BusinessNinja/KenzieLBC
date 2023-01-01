@@ -44,7 +44,7 @@ class GameControllerTest {
         String conditionOfGame = mockNeat.strings().valStr();
         String maturityLevel = mockNeat.strings().valStr();
         Integer numberOfPlayers = mockNeat.ints().range(1, 6).val();
-        Integer playtimeInMinutes = mockNeat.ints().range(30, 180).val();
+        Integer playtimeInMinutes = mockNeat.ints().range(30, 120).val();
 
         Game game =
                 new Game(gameId, gameTitle, genre, weightOfGame, conditionOfGame,

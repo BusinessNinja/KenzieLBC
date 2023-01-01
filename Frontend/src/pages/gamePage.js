@@ -23,7 +23,7 @@ class GamePage extends BaseClass {
     /** Render Methods -----------------------------------------------------------------------------------------------*/
 
     async renderGames() {
-        let resultArea = document.getElementById("result-info");
+        //let resultArea = document.getElementById("result-info");
         const games = this.dataStore.get("games");
 
         let content = "<ul>";
@@ -39,7 +39,7 @@ class GamePage extends BaseClass {
             });
         }
         content += "</ul>";
-        resultArea.innerHTML = content;
+        //resultArea.innerHTML = content;
     }
 
     /** Event Handlers -----------------------------------------------------------------------------------------------*/
