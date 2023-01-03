@@ -21,6 +21,8 @@ public class GameResponse {
     private Integer numberOfPlayers;
     @JsonProperty("playtimeInMinutes")
     private Integer playtimeInMinutes;
+    @JsonProperty("tags")
+    private String tags;
 
 
     public String getGameId() {
@@ -86,4 +88,8 @@ public class GameResponse {
     public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
         this.playtimeInMinutes = playtimeInMinutes;
     }
+
+    public String getTags() { return tags; }
+
+    public void setTags(String tags) { this.tags = tags; }
 }

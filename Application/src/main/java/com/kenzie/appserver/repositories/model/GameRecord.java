@@ -9,14 +9,13 @@ import org.springframework.data.annotation.Id;
 public class GameRecord {
     @Id
     private GamePrimaryKey primaryKey;
-    private String gameId;
-    private String gameTitle;
     private String genre;
     private String weightOfGame;
     private String conditionOfGame;
     private String maturityLevel;
     private Integer numberOfPlayers;
     private Integer playtimeInMinutes;
+    private String tags;
 
     @DynamoDBHashKey(attributeName = "gameId")
     public String getGameId() {
@@ -96,5 +95,14 @@ public class GameRecord {
 
     public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
         this.playtimeInMinutes = playtimeInMinutes;
+    }
+
+    @DynamoDBAttribute(attributeName = "tags")
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

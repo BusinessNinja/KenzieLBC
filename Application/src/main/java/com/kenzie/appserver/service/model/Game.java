@@ -9,8 +9,9 @@ public class Game {
     private String maturityLevel;
     private Integer numberOfPlayers;
     private Integer playtimeInMinutes;
+    private String tags;
 
-    public Game(String gameId, String gameTitle, String genre, String weightOfGame, String conditionOfGame, String maturityLevel, Integer numberOfPlayers, Integer playtimeInMinutes) {
+    public Game(String gameId, String gameTitle, String genre, String weightOfGame, String conditionOfGame, String maturityLevel, Integer numberOfPlayers, Integer playtimeInMinutes, String tags) {
         this.gameId = gameId;
         this.gameTitle = gameTitle;
         this.genre = genre;
@@ -19,6 +20,7 @@ public class Game {
         this.maturityLevel = maturityLevel;
         this.numberOfPlayers = numberOfPlayers;
         this.playtimeInMinutes = playtimeInMinutes;
+        this.tags = tags;
     }
 
     public String getGameId() { return this.gameId; }
@@ -36,6 +38,8 @@ public class Game {
     public Integer getNumberOfPlayers() { return this.numberOfPlayers; }
 
     public Integer getPlaytimeInMinutes() { return this.playtimeInMinutes; }
+
+    public String getTags() { return this.tags; }
 
 
     public void setGameTitle(String gameTitle) {
@@ -64,5 +68,9 @@ public class Game {
 
     public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
         this.playtimeInMinutes = playtimeInMinutes;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }
