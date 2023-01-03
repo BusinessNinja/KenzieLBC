@@ -38,166 +38,329 @@
 
         table.children[0].insertBefore(row, table.children[0].childNodes[2]);
 
+        //If any of the fields are empty, don't add the game to the table
+        if (td1.innerHTML === "" || td2.innerHTML === "" || td3.innerHTML === "" || td4.innerHTML === "" ||
+            td5.innerHTML === "" || td6.innerHTML === "" || td7.innerHTML === "" || td8.innerHTML === "") {
+            row.remove();
+        }
+
+        //Each new row adjusts to center the information added
         var tableRows = document.getElementsByTagName("tr");
         for (var i = 0; i < tableRows.length; i++) {
             tableRows[i].style.textAlign = "center";
             tableRows[i].style.padding = "10px";
         }
+
+        //Add edit button to each row created
+        var editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        editButton.setAttribute("onclick", "editRow(this)");
+        editButton.setAttribute("class", "editButton");
+        row.appendChild(editButton);
+
+        //Add delete button to each row created
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+        deleteButton.setAttribute("onclick", "deleteRow(this)");
+        deleteButton.setAttribute("class", "deleteButton");
+        row.appendChild(deleteButton);
+    }
+</script>
+<script>
+    function editRow(r) {
+        //Only one row can be edited at a time
+        //If a row is already being edited, the user must finish editing that row before editing another
+        //Only the row the edit button is clicked on will be editable
+        var x = document.getElementsByClassName("editButton");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        var y = document.getElementsByClassName("deleteButton");
+        var j;
+        for (j = 0; j < y.length; j++) {
+            y[j].style.display = "none";
+        }
+        var z = document.getElementsByClassName("saveButton");
+        var k;
+        for (k = 0; k < z.length; k++) {
+            z[k].style.display = "none";
+        }
+        var l = document.getElementsByClassName("cancelButton");
+        var m;
+        for (m = 0; m < l.length; m++) {
+            l[m].style.display = "none";
+        }
+
+        //Only the row the edit button is clicked on will be editable
+        var row = r.parentNode.parentNode;
+        var cells = row.getElementsByTagName("td");
+        var i;
+        for (i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            var content = cell.innerHTML;
+            cell.innerHTML = "<input type='text' value='" + content + "'>";
+        }
+
+        r.style.display = "none";
+        //Add save button to each row being edited
+        var saveButton = document.createElement("button");
+        saveButton.innerHTML = "Save";
+        saveButton.setAttribute("onclick", "saveRow(this)");
+        saveButton.setAttribute("class", "saveButton");
+        row.appendChild(saveButton);
+
+        //Add cancel button to each row being edited
+        var cancelButton = document.createElement("button");
+        cancelButton.innerHTML = "Cancel";
+        cancelButton.setAttribute("onclick", "cancelRow(this)");
+        cancelButton.setAttribute("class", "cancelButton");
+        row.appendChild(cancelButton);
+    }
+</script>
+<script>
+    function cancelRow() {
+        //Doesn't save the fields that were edited and all fields revert back to original values
+        //If user clicks "OK", the row is left as is
+        //Save and Cancel buttons are removed
+        //Edit and Delete buttons are added back to original location
+        if (confirm("Are you sure you want to cancel? All changes will be lost.")) {
+            var x = document.getElementsByClassName("editButton");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "inline";
+            }
+            var y = document.getElementsByClassName("deleteButton");
+            var j;
+            for (j = 0; j < y.length; j++) {
+                y[j].style.display = "inline";
+            }
+            var z = document.getElementsByClassName("saveButton");
+            var k;
+            for (k = 0; k < z.length; k++) {
+                z[k].style.display = "none";
+            }
+            var l = document.getElementsByClassName("cancelButton");
+            var m;
+            for (m = 0; m < l.length; m++) {
+                l[m].style.display = "none";
+            }
+            var row = document.getElementsByTagName("tr");
+            var i;
+            for (i = 0; i < row.length; i++) {
+                var cells = row[i].getElementsByTagName("td");
+                var j;
+                for (j = 0; j < cells.length; j++) {
+                    var cell = cells[j];
+                    var content = cell.getElementsByTagName("input")[0].value;
+                    cell.innerHTML = content;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function deleteRow(r) {
+        if (confirm("Are you sure you want to delete this game?")) {
+            var row = r.parentNode.parentNode;
+            row.removeChild(r.parentNode);
+            var tableRows = document.getElementsByTagName("tr");
+            var i;
+            for (i = 0; i < tableRows.length; i++) {
+                tableRows[i].style.textAlign = "center";
+                tableRows[i].style.padding = "10px";
+            }
+        }
+    }
+</script>
+<script>
+    function saveRow(r) {
+        // saves changes made to the row and removes the save and cancel buttons
+        // edit and delete buttons are re-added back to original location
+        var x = document.getElementsByClassName("editButton");
+        var i;
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "inline";
+        }
+        var y = document.getElementsByClassName("deleteButton");
+        var j;
+        for (j = 0; j < y.length; j++) {
+            y[j].style.display = "inline";
+        }
+        var z = document.getElementsByClassName("saveButton");
+        var k;
+        for (k = 0; k < z.length; k++) {
+            z[k].style.display = "none";
+        }
+        var l = document.getElementsByClassName("cancelButton");
+        var m;
+        for (m = 0; m < l.length; m++) {
+            l[m].style.display = "none";
+        }
+        var row = r.parentNode.parentNode;
+        var cells = row.getElementsByTagName("td");
+        var i;
+        for (i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            var content = cell.getElementsByTagName("input")[0].value;
+            cell.innerHTML = content;
+        }
     }
 </script>
 <body class="background">
-    <header class="header" id="header">
-        <div class="site-title">
-            <a class="header_home" href="index.html">iAmBoard</a>
-        </div>
-        <div>
-            <a href="search.html">Go to Search Page</a>
-        </div>
-    </header>
-    <div class="card">
-        <h2>Add Game</h2>
-        <form class="card-content" id="create-game-form">
-            <p class="form-field">
-                <label>Title</label>
-                <input type="text" required class="validated-field" id="create-game-gametitle">
-                <label>Genre</label>
-                <select id="create-game-genre">
-                    <option value="">--Choose A Genre--</option>
-                    <option value="Action">Action</option>
-                    <option value="Adventure">Adventure</option>
-                    <option value="Arcade">Arcade</option>
-                    <option value="Board">Board</option>
-                    <option value="Card">Card</option>
-                    <option value="Casino">Casino</option>
-                    <option value="Casual">Casual</option>
-                    <option value="Educational">Educational</option>
-                    <option value="Family">Family</option>
-                    <option value="Music">Music</option>
-                    <option value="Puzzle">Puzzle</option>
-                    <option value="Racing">Racing</option>
-                    <option value="Role Playing">Role Playing</option>
-                    <option value="Simulation">Simulation</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Strategy">Strategy</option>
-                    <option value="Trivia">Trivia</option>
-                    <option value="Word">Word</option>
-                </select>
-                <label>Weight of Game</label>
-                <select id="create-game-weightofgame">
-                    <option value="">--Choose Weight of Game--</option>
-                    <option value="Light">Light</option>
-                    <option value="Medium Light">Medium Light</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Medium Heavy">Medium Heavy</option>
-                    <option value="Heavy">Heavy</option>
-                </select>
-                <label>Condition of Game</label>
-                <select id="create-game-conditionofgame">
-                    <option value="">--Choose Condition of Game--</option>
-                    <option value="New">New</option>
-                    <option value="Like New">Like New</option>
-                    <option value="Good">Good</option>
-                    <option value="Fair">Fair</option>
-                    <option value="Poor">Poor</option>
-                </select>
-                <label>Maturity Level</label>
-                <select id="create-game-maturitylevel">
-                    <option value="">--Choose Maturity Level--</option>
-                    <option value="4+">4+</option>
-                    <option value="8+">8+</option>
-                    <option value="12+">12+</option>
-                    <option value="16+">16+</option>
-                </select>
-                <label># of Players</label>
-                <select id="create-game-numberofplayers">
-                    <option value="">--Choose # of Players--</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-                <label>Playtime in Minutes</label>
-                <select id="create-game-playtimeinminutes">
-                    <option value="">--Choose Playtime--</option>
-                    <option value="15">15</option>
-                    <option value="30">30</option>
-                    <option value="45">45</option>
-                    <option value="60">60</option>
-                    <option value="75">75</option>
-                    <option value="90">90</option>
-                    <option value="105">105</option>
-                    <option value="120">120</option>
-                </select>
-                <label>Tag</label>
-                <select id="create-game-tags">
-                    <option value="">--Choose Tag--</option>
-                    <option value="Cooperative">Cooperative</option>
-                    <option value="Competitive">Competitive</option>
-                    <option value="Party">Party</option>
-                    <option value="Family">Family</option>
-                    <option value="Abstract">Abstract</option>
-                    <option value="Thematic">Thematic</option>
-                    <option value="Strategy">Strategy</option>
-                    <option value="Dice">Dice</option>
-                    <option value="Card">Card</option>
-                    <option value="Deck Building">Deck Building</option>
-                    <option value="Worker Placement">Worker Placement</option>
-                    <option value="Area Control">Area Control</option>
-                    <option value="Tile Placement">Tile Placement</option>
-                    <option value="Hand Management">Hand Management</option>
-                    <option value="Variable Player Powers">Variable Player Powers</option>
-                    <option value="Set Collection">Set Collection</option>
-                    <option value="Modular Board">Modular Board</option>
-                    <option value="Grid Movement">Grid Movement</option>
-                    <option value="Campaign / Battle Card Driven">Campaign / Battle Card Driven</option>
-                    <option value="Point to Point Movement">Point to Point Movement</option>
-                    <option value="Pattern Building">Pattern Building</option>
-                    <option value="Roll / Spin and Move">Roll / Spin and Move</option>
-                    <option value="Simulation">Simulation</option>
-                    <option value="Action / Movement Programming">Action / Movement Programming</option>
-                    <option value="Area Movement">Area Movement</option>
-                    <option value="Memory">Memory</option>
-                    <option value="Pattern Recognition">Pattern Recognition</option>
-                    <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
-                    <option value="Secret Unit Deployment">Secret Unit Deployment</option>
-                    <option value="Storytelling">Storytelling</option>
-                    <option value="Trick-taking">Trick-taking</option>
-                    <option value="Voting">Voting</option>
-                    <option value="Deduction">Deduction</option>
-                    <option value="Dice Rolling">Dice Rolling</option>
-                    <option value="Paper-and-Pencil">Paper-and-Pencil</option>
-                    <option value="Part of a Series">Part of a Series</option>
-                    <option value="Reimplementation">Reimplementation</option>
-                    <option value="Revised Edition">Revised Edition</option>
-                    <option value="Sequel">Sequel</option>
-                    <option value="Spin-off">Spin-off</option>
-                    <option value="Stand-alone Expansion">Stand-alone Expansion</option>
-                    <option value="Storytelling">Storytelling</option>
-                </select>
-            </p>
-            <button onclick="publishToTable()">Add</button>
-        </form>
+<header class="header" id="header">
+    <div class="site-title">
+        <a class="header_home" href="index.html">iAmBoard</a>
     </div>
+    <div>
+        <a href="search.html">Go to Search Page</a>
+    </div>
+</header>
+<div class="card">
+    <h2>Add Game</h2>
+    <form class="card-content" id="create-game-form">
+        <p class="form-field">
+            <label>Title</label>
+            <input type="text" required class="validated-field" id="create-game-gametitle">
+            <label>Genre</label>
+            <select id="create-game-genre">
+                <option value="">--Choose A Genre--</option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Arcade">Arcade</option>
+                <option value="Board">Board</option>
+                <option value="Card">Card</option>
+                <option value="Casino">Casino</option>
+                <option value="Casual">Casual</option>
+                <option value="Educational">Educational</option>
+                <option value="Family">Family</option>
+                <option value="Music">Music</option>
+                <option value="Puzzle">Puzzle</option>
+                <option value="Racing">Racing</option>
+                <option value="Role Playing">Role Playing</option>
+                <option value="Simulation">Simulation</option>
+                <option value="Sports">Sports</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Trivia">Trivia</option>
+                <option value="Word">Word</option>
+            </select>
+            <label>Weight of Game</label>
+            <select id="create-game-weightofgame">
+                <option value="">--Choose Weight of Game--</option>
+                <option value="Light">Light</option>
+                <option value="Medium Light">Medium Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Medium Heavy">Medium Heavy</option>
+                <option value="Heavy">Heavy</option>
+            </select>
+            <label>Condition of Game</label>
+            <select id="create-game-conditionofgame">
+                <option value="">--Choose Condition of Game--</option>
+                <option value="New">New</option>
+                <option value="Like New">Like New</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor">Poor</option>
+            </select>
+            <label>Maturity Level</label>
+            <select id="create-game-maturitylevel">
+                <option value="">--Choose Maturity Level--</option>
+                <option value="4+">4+</option>
+                <option value="8+">8+</option>
+                <option value="12+">12+</option>
+                <option value="16+">16+</option>
+            </select>
+            <label># of Players</label>
+            <select id="create-game-numberofplayers">
+                <option value="">--Choose # of Players--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <label>Playtime in Minutes</label>
+            <select id="create-game-playtimeinminutes">
+                <option value="">--Choose Playtime--</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+                <option value="60">60</option>
+                <option value="75">75</option>
+                <option value="90">90</option>
+                <option value="105">105</option>
+                <option value="120">120</option>
+            </select>
+            <label>Tag</label>
+            <select id="create-game-tags">
+                <option value="">--Choose Tag--</option>
+                <option value="Cooperative">Cooperative</option>
+                <option value="Competitive">Competitive</option>
+                <option value="Party">Party</option>
+                <option value="Family">Family</option>
+                <option value="Abstract">Abstract</option>
+                <option value="Thematic">Thematic</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Dice">Dice</option>
+                <option value="Card">Card</option>
+                <option value="Deck Building">Deck Building</option>
+                <option value="Worker Placement">Worker Placement</option>
+                <option value="Area Control">Area Control</option>
+                <option value="Tile Placement">Tile Placement</option>
+                <option value="Hand Management">Hand Management</option>
+                <option value="Variable Player Powers">Variable Player Powers</option>
+                <option value="Set Collection">Set Collection</option>
+                <option value="Modular Board">Modular Board</option>
+                <option value="Grid Movement">Grid Movement</option>
+                <option value="Campaign / Battle Card Driven">Campaign / Battle Card Driven</option>
+                <option value="Point to Point Movement">Point to Point Movement</option>
+                <option value="Pattern Building">Pattern Building</option>
+                <option value="Roll / Spin and Move">Roll / Spin and Move</option>
+                <option value="Simulation">Simulation</option>
+                <option value="Action / Movement Programming">Action / Movement Programming</option>
+                <option value="Area Movement">Area Movement</option>
+                <option value="Memory">Memory</option>
+                <option value="Pattern Recognition">Pattern Recognition</option>
+                <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
+                <option value="Secret Unit Deployment">Secret Unit Deployment</option>
+                <option value="Storytelling">Storytelling</option>
+                <option value="Trick-taking">Trick-taking</option>
+                <option value="Voting">Voting</option>
+                <option value="Deduction">Deduction</option>
+                <option value="Dice Rolling">Dice Rolling</option>
+                <option value="Paper-and-Pencil">Paper-and-Pencil</option>
+                <option value="Part of a Series">Part of a Series</option>
+                <option value="Reimplementation">Reimplementation</option>
+                <option value="Revised Edition">Revised Edition</option>
+                <option value="Sequel">Sequel</option>
+                <option value="Spin-off">Spin-off</option>
+                <option value="Stand-alone Expansion">Stand-alone Expansion</option>
+                <option value="Storytelling">Storytelling</option>
+            </select>
+        </p>
+        <button onclick="publishToTable()">Add</button>
+    </form>
+</div>
+<div class="card">
     <div id="tables">
         <h2>Current Library</h2>
         <table id="table">
             <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Weight of Game</th>
-                    <th>Condition of Game</th>
-                    <th>Maturity Level</th>
-                    <th># of Players</th>
-                    <th>Playtime in Minutes</th>
-                    <th>Tags</th>
-                </tr>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Weight of Game</th>
+                <th>Condition of Game</th>
+                <th>Maturity Level</th>
+                <th># of Players</th>
+                <th>Playtime in Minutes</th>
+                <th>Tags</th>
+            </tr>
             </thead>
         </table>
-<!--        <p id="result-info"></p>-->
+        <!--        <p id="result-info"></p>-->
     </div>
-
+</div>
 </body>
 </html>

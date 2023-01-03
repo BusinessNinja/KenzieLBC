@@ -36,6 +36,7 @@ class GamePage extends BaseClass {
                 content += `<li>${game.maturityLevel}</li>`
                 content += `<li>${game.numberOfPlayers}</li>`
                 content += `<li>${game.playtimeInMinutes}</li>`
+                content += `<li>${game.tags}</li>`
             });
         }
         content += "</ul>";
@@ -61,6 +62,7 @@ class GamePage extends BaseClass {
         const maturityLevel = document.getElementById("create-game-maturitylevel").value;
         const numberOfPlayers = document.getElementById("create-game-numberofplayers").value;
         const playtimeInMinutes = document.getElementById("create-game-playtimeinminutes").value;
+        const tags = document.getElementById("create-game-tags").value;
 
         // Create the game
         const newGame = {
@@ -70,18 +72,26 @@ class GamePage extends BaseClass {
             conditionOfGame,
             maturityLevel,
             numberOfPlayers,
-            playtimeInMinutes
+            playtimeInMinutes,
+            tags
         };
 
         console.log(newGame)
 
+        // if any fields are empty, don't create the game
+        if (Object.values(newGame).some(value => value === "")) {
+            this.showMessage("Please fill out all fields", "error");
+            return;
+        }
         const createdGame = await this.client.createGame(gameTitle,
             genre,
             weightOfGame,
             conditionOfGame,
             maturityLevel,
             numberOfPlayers,
-            playtimeInMinutes, this.errorHandler);
+            playtimeInMinutes,
+            tags,
+            this.errorHandler);
 
         if (createdGame) {
             this.showMessage("Added a game!")
