@@ -93,11 +93,11 @@
         }
 
         //Only the row the edit button is clicked on will be editable
-        var row = r.parentNode.parentNode;
+        var row = r.parentNode;
         var cells = row.getElementsByTagName("td");
-        var i;
-        for (i = 0; i < cells.length; i++) {
-            var cell = cells[i];
+        var b;
+        for (b = 0; b < cells.length; b++) {
+            var cell = cells[b];
             var content = cell.innerHTML;
             cell.innerHTML = "<input type='text' value='" + content + "'>";
         }
@@ -126,9 +126,9 @@
         //Edit and Delete buttons are added back to original location
         if (confirm("Are you sure you want to cancel? All changes will be lost.")) {
             var x = document.getElementsByClassName("editButton");
-            var i;
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "inline";
+            var a;
+            for (a = 0; a < x.length; a++) {
+                x[a].style.display = "inline";
             }
             var y = document.getElementsByClassName("deleteButton");
             var j;
@@ -178,9 +178,9 @@
         // saves changes made to the row and removes the save and cancel buttons
         // edit and delete buttons are re-added back to original location
         var x = document.getElementsByClassName("editButton");
-        var i;
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "inline";
+        var a;
+        for (a = 0; a < x.length; a++) {
+            x[a].style.display = "inline";
         }
         var y = document.getElementsByClassName("deleteButton");
         var j;
@@ -197,7 +197,7 @@
         for (m = 0; m < l.length; m++) {
             l[m].style.display = "none";
         }
-        var row = r.parentNode.parentNode;
+        var row = r.parentNode;
         var cells = row.getElementsByTagName("td");
         var i;
         for (i = 0; i < cells.length; i++) {
