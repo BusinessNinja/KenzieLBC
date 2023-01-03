@@ -152,8 +152,9 @@
                 var j;
                 for (j = 0; j < cells.length; j++) {
                     var cell = cells[j];
-                    var content = cell.getElementsByTagName("input")[0].value;
-                    cell.innerHTML = content;
+                    if (cell.getElementsByTagName("input").length > 0) {
+                        cell.innerHTML = cell.innerHTML.match(/value="(.*)"/)[1];
+                    }
                 }
             }
         }
