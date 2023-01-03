@@ -1,4 +1,4 @@
-package com.kenzie.appserver;
+package com.kenzie.appserver.enums;
 
 import com.kenzie.appserver.controller.model.GameResponse;
 

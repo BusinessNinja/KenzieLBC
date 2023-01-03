@@ -25,9 +25,9 @@ export default class GameClient extends BaseClass {
         }
     }
 
-    async getGame(id, errorCallback) {
+    async getGame(gameId, errorCallback) {
         try {
-            const response = await this.client.get(`/game/${id}`);
+            const response = await this.client.get(`/game/${gameId}`);
             return response.data;
         } catch (error) {
             this.handleError("getGame", error, errorCallback)

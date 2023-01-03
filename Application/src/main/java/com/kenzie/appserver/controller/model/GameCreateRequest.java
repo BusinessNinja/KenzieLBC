@@ -23,6 +23,8 @@ public class GameCreateRequest {
     private Integer numberOfPlayers;
     @JsonProperty("playtimeInMinutes")
     private Integer playtimeInMinutes;
+    @JsonProperty("tags")
+    private String tags;
 
 
     public String getGameId() {
@@ -87,5 +89,13 @@ public class GameCreateRequest {
 
     public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
         this.playtimeInMinutes = playtimeInMinutes;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String gameId) {
+        this.tags = tags;
     }
 }

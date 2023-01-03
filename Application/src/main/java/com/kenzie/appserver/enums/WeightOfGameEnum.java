@@ -1,12 +1,12 @@
-package com.kenzie.appserver;
+package com.kenzie.appserver.enums;
 
 import com.kenzie.appserver.controller.model.GameResponse;
 
 public enum WeightOfGameEnum {
     LIGHT,
-    MEDUIM_LIGHT,
-    MEDUIM,
-    MEDUIM_HEAVY,
+    MEDIUM_LIGHT,
+    MEDIUM,
+    MEDIUM_HEAVY,
     HEAVY;
 
 
@@ -14,7 +14,7 @@ public enum WeightOfGameEnum {
 
 class WeightOfGameEnumMain {
     public void main(String[] args) {
-        WeightOfGameEnum myVar = WeightOfGameEnum.MEDUIM;
+        WeightOfGameEnum myVar = WeightOfGameEnum.MEDIUM;
 
         GameResponse gameResponse = new GameResponse();
 
@@ -24,14 +24,14 @@ class WeightOfGameEnumMain {
             case LIGHT:
                 gameResponse.setWeightOfGame("Light");
                 break;
-            case MEDUIM_LIGHT:
-                gameResponse.setWeightOfGame("Meduim Light");
+            case MEDIUM_LIGHT:
+                gameResponse.setWeightOfGame("Medium Light");
                 break;
-            case MEDUIM:
-                gameResponse.setWeightOfGame("Meduim");
+            case MEDIUM:
+                gameResponse.setWeightOfGame("Medium");
                 break;
-            case MEDUIM_HEAVY:
-                gameResponse.setWeightOfGame("Meduim Heavy");
+            case MEDIUM_HEAVY:
+                gameResponse.setWeightOfGame("Medium Heavy");
                 break;
             case HEAVY:
                 gameResponse.setWeightOfGame("Heavy");

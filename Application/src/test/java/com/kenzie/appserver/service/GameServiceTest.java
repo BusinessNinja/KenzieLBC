@@ -197,7 +197,7 @@ public class GameServiceTest {
         record.setPlaytimeInMinutes(1);
 
         Game game = new Game(record.getGameId(), record.getGameTitle(), record.getGenre(), record.getWeightOfGame(),
-                record.getConditionOfGame(), record.getMaturityLevel(), record.getNumberOfPlayers(), record.getPlaytimeInMinutes());
+                record.getConditionOfGame(), record.getMaturityLevel(), record.getNumberOfPlayers(), record.getPlaytimeInMinutes(), record.getTags());
 
         //WHEN
         when(gameRepository.save(record)).thenReturn(record);

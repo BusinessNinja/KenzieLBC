@@ -49,7 +49,7 @@ public class GameController{
     public ResponseEntity<GameResponse> addNewGame(@RequestBody GameCreateRequest gameCreateRequest) {
 
         Game game = new Game(randomUUID().toString(), gameCreateRequest.getGameTitle(), gameCreateRequest.getGenre(), gameCreateRequest.getWeightOfGame(),
-                gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes());
+                gameCreateRequest.getConditionOfGame(), gameCreateRequest.getMaturityLevel(), gameCreateRequest.getNumberOfPlayers(), gameCreateRequest.getPlaytimeInMinutes(), gameCreateRequest.getTags());
 
         System.out.println(game.toString());
 
@@ -75,6 +75,7 @@ public class GameController{
         game.setMaturityLevel(updatedGame.getMaturityLevel());
         game.setNumberOfPlayers(updatedGame.getNumberOfPlayers());
         game.setPlaytimeInMinutes(updatedGame.getPlaytimeInMinutes());
+        game.setTags(updatedGame.getTags());
         gameService.updateGame(game);
         return ResponseEntity.ok();
     }
@@ -91,6 +92,7 @@ public class GameController{
         gameResponse.setMaturityLevel(game.getMaturityLevel());
         gameResponse.setNumberOfPlayers(game.getNumberOfPlayers());
         gameResponse.setPlaytimeInMinutes(game.getPlaytimeInMinutes());
+        gameResponse.setTags(game.getTags());
         return gameResponse;
     }
 }

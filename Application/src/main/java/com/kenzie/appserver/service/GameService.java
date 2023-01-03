@@ -21,7 +21,7 @@ public class GameService {
                 .findById(id)
                 .map(game -> new Game(game.getGameId(), game.getGameTitle(), game.getGenre(),
                         game.getWeightOfGame(), game.getConditionOfGame(), game.getMaturityLevel(),
-                        game.getNumberOfPlayers(), game.getPlaytimeInMinutes()))
+                        game.getNumberOfPlayers(), game.getPlaytimeInMinutes(), game.getTags()))
                 .orElse(null);
     }
 
@@ -30,7 +30,7 @@ public class GameService {
         gameRepository
                 .findAll()
                 .forEach(game -> games.add(new Game(game.getGameId(), game.getGameTitle(), game.getGenre(), game.getWeightOfGame(),
-                        game.getConditionOfGame(), game.getMaturityLevel(), game.getNumberOfPlayers(), game.getPlaytimeInMinutes())));
+                        game.getConditionOfGame(), game.getMaturityLevel(), game.getNumberOfPlayers(), game.getPlaytimeInMinutes(), game.getTags())));
         return games;
     }
 
@@ -44,6 +44,7 @@ public class GameService {
         gameRecord.setMaturityLevel(game.getMaturityLevel());
         gameRecord.setNumberOfPlayers(game.getNumberOfPlayers());
         gameRecord.setPlaytimeInMinutes(game.getPlaytimeInMinutes());
+        gameRecord.setTags(game.getTags());
         gameRepository.save(gameRecord);
         return game;
     }
@@ -57,7 +58,7 @@ public class GameService {
             gameRecord.setMaturityLevel(game.getMaturityLevel());
             gameRecord.setNumberOfPlayers(game.getNumberOfPlayers());
             gameRecord.setPlaytimeInMinutes(game.getPlaytimeInMinutes());
-//            gameRecord.setTags(game.getTags());
+            gameRecord.setTags(game.getTags());
             gameRepository.save(gameRecord);
         }
         return game;
