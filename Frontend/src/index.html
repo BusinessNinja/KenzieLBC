@@ -99,7 +99,119 @@
         for (b = 0; b < cells.length; b++) {
             var cell = cells[b];
             var content = cell.innerHTML;
-            cell.innerHTML = "<input type='text' value='" + content + "'>";
+            options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
+                "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
+            options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
+            options3 = ["New", "Like New", "Good", "Fair", "Poor"];
+            options4 = ["4+", "8+", "12+", "16+"];
+            options5 = ["1", "2", "3", "4", "5", "6"];
+            options6 = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80",
+                "85", "90", "95", "100", "105", "110", "115", "120"];
+            if (b === 1) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-genre");
+                select.setAttribute("class", "edit-game-genre");
+                select.setAttribute("name", "edit-game-genre");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options1.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options1[i]);
+                    option.text = options1[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else if (b === 2) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-weightofgame");
+                select.setAttribute("class", "edit-game-weightofgame");
+                select.setAttribute("name", "edit-game-weightofgame");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options2.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options2[i]);
+                    option.text = options2[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else if (b === 3) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-conditionofgame");
+                select.setAttribute("class", "edit-game-conditionofgame");
+                select.setAttribute("name", "edit-game-conditionofgame");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options3.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options3[i]);
+                    option.text = options3[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else if (b === 4) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-maturitylevel");
+                select.setAttribute("class", "edit-game-maturitylevel");
+                select.setAttribute("name", "edit-game-maturitylevel");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options4.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options4[i]);
+                    option.text = options4[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else if (b === 5) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-numberofplayers");
+                select.setAttribute("class", "edit-game-numberofplayers");
+                select.setAttribute("name", "edit-game-numberofplayers");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options5.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options5[i]);
+                    option.text = options5[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else if (b === 6) {
+                //Dropdown menu starts at current value
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-playtime");
+                select.setAttribute("class", "edit-game-playtime");
+                select.setAttribute("name", "edit-game-playtime");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options6.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options6[i]);
+                    option.text = options6[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
+            } else {
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("value", content);
+                input.setAttribute("class", "edit-game");
+                cell.innerHTML = "";
+                cell.appendChild(input);
+            }
         }
 
         r.style.display = "none";
@@ -198,13 +310,16 @@
         for (m = 0; m < l.length; m++) {
             l[m].style.display = "none";
         }
-        var row = r.parentNode;
+        var row = r.parentNode.parentNode;
         var cells = row.getElementsByTagName("td");
         var i;
         for (i = 0; i < cells.length; i++) {
             var cell = cells[i];
-            var content = cell.getElementsByTagName("input")[0].value;
-            cell.innerHTML = content;
+            if (cell.getElementsByTagName("input").length > 0) {
+                cell.innerHTML = cell.getElementsByTagName("input")[0].value;
+            } else if (cell.getElementsByTagName("select").length > 0) {
+                cell.innerHTML = cell.getElementsByTagName("select")[0].value;
+            }
         }
     }
 </script>
