@@ -121,12 +121,20 @@
             var content = cell.innerHTML;
             options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
                 "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
-            options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
+            options2 = ["Light", "Medium Light", "Medium", "Medium Heavy", "Heavy"];
             options3 = ["New", "Like New", "Good", "Fair", "Poor"];
             options4 = ["4+", "8+", "12+", "16+"];
             options5 = ["1", "2", "3", "4", "5", "6"];
             options6 = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80",
                 "85", "90", "95", "100", "105", "110", "115", "120"];
+            options7 = ["Competitive", "Party", "Family", "Abstract", "Thematic", "Strategy", "Dice", "Card",
+                "Deck Building", "Worker Placement", "Area Control", "Tile Placement", "Hand Management",
+                "Variable Player Powers", "Set Collection", "Modular Board", "Grid Movement", "Campaign / Battle Card Driven",
+                "Point to Point Movement", "Pattern Building", "Roll / Spin and Move", "Simulation", "Action / Movement Programming",
+                "Area Movement", "Memory", "Pattern Recognition", "Rock-Paper-Scissors", "Secret Unit Deployment",
+                "Storytelling", "Trick-taking", "Voting", "Deduction", "Dice Rolling", "Paper-and-Pencil", "Part of a Series",
+                "Reimplementation", "Revised Edition", "Sequel", "Spin-off", "Stand-alone Expansion", "Storytelling"];
+
             if (b === 1) {
                 var select = document.createElement("select");
                 select.setAttribute("id", "edit-game-genre");
@@ -223,6 +231,22 @@
                 select.value = content;
                 cell.innerHTML = "";
                 cell.appendChild(select);
+            } else if (b === 7) {
+                var select = document.createElement("select");
+                select.setAttribute("id", "edit-game-tags");
+                select.setAttribute("class", "edit-game-tags");
+                select.setAttribute("name", "edit-game-tags");
+                select.setAttribute("required", "required");
+                var option;
+                for (var i = 0; i < options7.length; i++) {
+                    option = document.createElement("option");
+                    option.setAttribute("value", options7[i]);
+                    option.text = options7[i];
+                    select.appendChild(option);
+                }
+                select.value = content;
+                cell.innerHTML = "";
+                cell.appendChild(select);
             } else {
                 var input = document.createElement("input");
                 input.setAttribute("type", "text");
@@ -233,20 +257,21 @@
             }
         }
 
-        r.style.display = "none";
-        //Add save button to each row being edited
-        var saveButton = document.createElement("button");
-        saveButton.innerHTML = "Save";
-        saveButton.setAttribute("onclick", "saveRow(this)");
-        saveButton.setAttribute("class", "saveButton");
-        row.appendChild(saveButton);
+            r.style.display = "none";
+            //Add save button to each row being edited
+            var saveButton = document.createElement("button");
+            saveButton.innerHTML = "Save";
+            saveButton.setAttribute("onclick", "saveRow(this)");
+            saveButton.setAttribute("class", "saveButton");
+            row.appendChild(saveButton);
 
-        //Add cancel button to each row being edited
-        var cancelButton = document.createElement("button");
-        cancelButton.innerHTML = "Cancel";
-        cancelButton.setAttribute("onclick", "cancelRow(this)");
-        cancelButton.setAttribute("class", "cancelButton");
-        row.appendChild(cancelButton);
+            //Add cancel button to each row being edited
+            var cancelButton = document.createElement("button");
+            cancelButton.innerHTML = "Cancel";
+            cancelButton.setAttribute("onclick", "cancelRow(this)");
+            cancelButton.setAttribute("class", "cancelButton");
+            row.appendChild(cancelButton);
+
     }
 </script>
 <script>
@@ -401,7 +426,7 @@
             <label>Title</label>
             <input type="text" required class="validated-field" id="create-game-gametitle">
             <label>Genre</label>
-            <select id="create-game-genre">
+            <select required id="create-game-genre">
                 <option value="">--Choose A Genre--</option>
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
@@ -423,7 +448,7 @@
                 <option value="Word">Word</option>
             </select>
             <label>Weight of Game</label>
-            <select id="create-game-weightofgame">
+            <select required id="create-game-weightofgame">
                 <option value="">--Choose Weight of Game--</option>
                 <option value="Light">Light</option>
                 <option value="Medium Light">Medium Light</option>
@@ -432,7 +457,7 @@
                 <option value="Heavy">Heavy</option>
             </select>
             <label>Condition of Game</label>
-            <select id="create-game-conditionofgame">
+            <select required id="create-game-conditionofgame">
                 <option value="">--Choose Condition of Game--</option>
                 <option value="New">New</option>
                 <option value="Like New">Like New</option>
@@ -441,7 +466,7 @@
                 <option value="Poor">Poor</option>
             </select>
             <label>Maturity Level</label>
-            <select id="create-game-maturitylevel">
+            <select required id="create-game-maturitylevel">
                 <option value="">--Choose Maturity Level--</option>
                 <option value="4+">4+</option>
                 <option value="8+">8+</option>
@@ -449,7 +474,7 @@
                 <option value="16+">16+</option>
             </select>
             <label># of Players</label>
-            <select id="create-game-numberofplayers">
+            <select required id="create-game-numberofplayers">
                 <option value="">--Choose # of Players--</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -459,7 +484,7 @@
                 <option value="6">6</option>
             </select>
             <label>Playtime in Minutes</label>
-            <select id="create-game-playtimeinminutes">
+            <select required id="create-game-playtimeinminutes">
                 <option value="">--Choose Playtime--</option>
                 <option value="15">15</option>
                 <option value="30">30</option>
@@ -471,7 +496,7 @@
                 <option value="120">120</option>
             </select>
             <label>Tag</label>
-            <select id="create-game-tags">
+            <select required id="create-game-tags">
                 <option value="">--Choose Tag--</option>
                 <option value="Cooperative">Cooperative</option>
                 <option value="Competitive">Competitive</option>
