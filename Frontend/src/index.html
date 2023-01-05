@@ -44,6 +44,25 @@
             row.remove();
         }
 
+        //Saves the game to local storage
+        var game = {
+            title: td1.innerHTML,
+            genre: td2.innerHTML,
+            weight: td3.innerHTML,
+            condition: td4.innerHTML,
+            maturity: td5.innerHTML,
+            players: td6.innerHTML,
+            time: td7.innerHTML,
+            tags: td8.innerHTML
+        };
+
+        var games = JSON.parse(localStorage.getItem("games"));
+        if (games === null) {
+            games = [];
+        }
+        games.push(game);
+        localStorage.setItem("games", JSON.stringify(games));
+
         //Each new row adjusts to center the information added
         var tableRows = document.getElementsByTagName("tr");
         for (var i = 0; i < tableRows.length; i++) {
@@ -64,6 +83,7 @@
         deleteButton.setAttribute("onclick", "deleteRow(this)");
         deleteButton.setAttribute("class", "deleteButton");
         row.appendChild(deleteButton);
+
     }
 </script>
 <script>
@@ -188,7 +208,6 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 6) {
-                //Dropdown menu starts at current value
                 var select = document.createElement("select");
                 select.setAttribute("id", "edit-game-playtime");
                 select.setAttribute("class", "edit-game-playtime");
@@ -257,18 +276,6 @@
             for (m = 0; m < l.length; m++) {
                 l[m].style.display = "none";
             }
-            var row = document.getElementsByTagName("tr");
-            var i;
-            for (i = 0; i < row.length; i++) {
-                var cells = row[i].getElementsByTagName("td");
-                var j;
-                for (j = 0; j < cells.length; j++) {
-                    var cell = cells[j];
-                    if (cell.getElementsByTagName("input").length > 0) {
-                        cell.innerHTML = cell.innerHTML.match(/value="(.*)"/)[1];
-                    }
-                }
-            }
         }
     }
 </script>
@@ -323,7 +330,62 @@
         }
     }
 </script>
-<body class="background">
+<script>
+    function displayGames() {
+        //All games saved in local storage are displayed in the table
+        //Each row has an edit and delete button
+        var table = document.getElementById("table");
+        var games = JSON.parse(localStorage.getItem("games"));
+        if (games !== null) {
+            for (var i = 0; i < games.length; i++) {
+                var row = document.createElement("tr");
+                var td1 = document.createElement("td");
+                var td2 = document.createElement("td");
+                var td3 = document.createElement("td");
+                var td4 = document.createElement("td");
+                var td5 = document.createElement("td");
+                var td6 = document.createElement("td");
+                var td7 = document.createElement("td");
+                var td8 = document.createElement("td");
+
+                td1.innerHTML = games[i].title;
+                td2.innerHTML = games[i].genre;
+                td3.innerHTML = games[i].weight;
+                td4.innerHTML = games[i].condition;
+                td5.innerHTML = games[i].maturity;
+                td6.innerHTML = games[i].players;
+                td7.innerHTML = games[i].time;
+                td8.innerHTML = games[i].tags;
+
+                row.appendChild(td1);
+                row.appendChild(td2);
+                row.appendChild(td3);
+                row.appendChild(td4);
+                row.appendChild(td5);
+                row.appendChild(td6);
+                row.appendChild(td7);
+                row.appendChild(td8);
+
+                table.children[0].insertBefore(row, table.children[0].childNodes[2]);
+
+                //Add edit button to each row created
+                var editButton = document.createElement("button");
+                editButton.innerHTML = "Edit";
+                editButton.setAttribute("onclick", "editRow(this)");
+                editButton.setAttribute("class", "editButton");
+                row.appendChild(editButton);
+
+                //Add delete button to each row created
+                var deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "Delete";
+                deleteButton.setAttribute("onclick", "deleteRow(this)");
+                deleteButton.setAttribute("class", "deleteButton");
+                row.appendChild(deleteButton);
+            }
+        }
+    }
+</script>
+<body class="background" onload="displayGames()">
 <header class="header" id="header">
     <div class="site-title">
         <a class="header_home" href="index.html">iAmBoard</a>
