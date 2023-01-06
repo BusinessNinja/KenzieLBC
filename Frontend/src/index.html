@@ -44,24 +44,23 @@
             row.remove();
         }
 
-        //Saves the game to local storage
-        var game = {
-            title: td1.innerHTML,
-            genre: td2.innerHTML,
-            weight: td3.innerHTML,
-            condition: td4.innerHTML,
-            maturity: td5.innerHTML,
-            players: td6.innerHTML,
-            time: td7.innerHTML,
-            tags: td8.innerHTML
-        };
-
-        var games = JSON.parse(localStorage.getItem("games"));
-        if (games === null) {
-            games = [];
+        //Save games to local storage so they persist after page refresh or close
+        //Each game is assigned a unique ID so that it can be deleted or updated later
+        //The ID is randomly generated and checked to make sure it is unique
+        var id = Math.floor(Math.random() * 1000000000);
+        while (localStorage.getItem(id) !== null) {
+            id = Math.floor(Math.random() * 1000000000);
         }
-        games.push(game);
-        localStorage.setItem("games", JSON.stringify(games));
+        localStorage.setItem(id, JSON.stringify({
+            "gameTitle": td1.innerHTML,
+            "genre": td2.innerHTML,
+            "weightOfGame": td3.innerHTML,
+            "conditionOfGame": td4.innerHTML,
+            "maturityLevel": td5.innerHTML,
+            "numberOfPlayers": td6.innerHTML,
+            "playtimeInMinutes": td7.innerHTML,
+            "tags": td8.innerHTML
+        }));
 
         //Each new row adjusts to center the information added
         var tableRows = document.getElementsByTagName("tr");
@@ -127,14 +126,14 @@
             options5 = ["1", "2", "3", "4", "5", "6"];
             options6 = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80",
                 "85", "90", "95", "100", "105", "110", "115", "120"];
-            options7 = ["Competitive", "Party", "Family", "Abstract", "Thematic", "Strategy", "Dice", "Card",
-                "Deck Building", "Worker Placement", "Area Control", "Tile Placement", "Hand Management",
-                "Variable Player Powers", "Set Collection", "Modular Board", "Grid Movement", "Campaign / Battle Card Driven",
-                "Point to Point Movement", "Pattern Building", "Roll / Spin and Move", "Simulation", "Action / Movement Programming",
-                "Area Movement", "Memory", "Pattern Recognition", "Rock-Paper-Scissors", "Secret Unit Deployment",
-                "Storytelling", "Trick-taking", "Voting", "Deduction", "Dice Rolling", "Paper-and-Pencil", "Part of a Series",
-                "Reimplementation", "Revised Edition", "Sequel", "Spin-off", "Stand-alone Expansion", "Storytelling"];
-
+            options7 = ["Cooperative", "Competitive", "Solo", "Party", "Family", "Abstract", "Dexterity", "Dice", "Card",
+                "Deck Building", "Hand Management", "Worker Placement", "Tile Placement", "Area Control", "Area Influence",
+                "Area Movement", "Grid Movement", "Set Collection", "Pattern Building", "Memory", "Auction", "Bluffing",
+                "Betting", "Campaign", "Modular Board", "Paper and Pencil", "Partnerships", "Pattern Building",
+                "Pick-up and Deliver", "Player Elimination", "Point to Point Movement", "Press Your Luck",
+                "Rock-Paper-Scissors", "Roll / Spin and Move", "Secret Unit Deployment", "Simulation",
+                "Simultaneous Action Selection", "Storytelling", "Take That", "Time Track", "Trading",
+                "Variable Player Powers", "Voting", "Worker Placement"];
             if (b === 1) {
                 var select = document.createElement("select");
                 select.setAttribute("id", "edit-game-genre");
@@ -301,6 +300,10 @@
             for (m = 0; m < l.length; m++) {
                 l[m].style.display = "none";
             }
+
+            //If user clicks "Cancel", all changes are not saved
+            //Fields close and revert back to original values
+
         }
     }
 </script>
@@ -357,10 +360,13 @@
 </script>
 <script>
     function displayGames() {
-        //All games saved in local storage are displayed in the table
+        //All keys stored in local storage are retrieved and displayed in the table
+        //All information is retrieved from local storage and displayed in the table
+        //Proper fields are displayed in the table within the proper cells
         //Each row has an edit and delete button
         var table = document.getElementById("table");
-        var games = JSON.parse(localStorage.getItem("games"));
+        //Games = all keys stored in local storage added by the user
+        var games = Object.keys(localStorage);
         if (games !== null) {
             for (var i = 0; i < games.length; i++) {
                 var row = document.createElement("tr");
@@ -373,14 +379,25 @@
                 var td7 = document.createElement("td");
                 var td8 = document.createElement("td");
 
-                td1.innerHTML = games[i].title;
-                td2.innerHTML = games[i].genre;
-                td3.innerHTML = games[i].weight;
-                td4.innerHTML = games[i].condition;
-                td5.innerHTML = games[i].maturity;
-                td6.innerHTML = games[i].players;
-                td7.innerHTML = games[i].time;
-                td8.innerHTML = games[i].tags;
+                //Parsing the JSON string retrieved from local storage
+                var game = JSON.parse(localStorage.getItem(games[i]));
+                var gameTitle = game.gameTitle;
+                var genre = game.genre;
+                var weightOfGame = game.weightOfGame;
+                var conditionOfGame = game.conditionOfGame;
+                var maturityLevel = game.maturityLevel;
+                var numberOfPlayers = game.numberOfPlayers;
+                var playtimeInMinutes = game.playtimeInMinutes;
+                var tags = game.tags;
+
+                td1.innerHTML = gameTitle;
+                td2.innerHTML = genre;
+                td3.innerHTML = weightOfGame;
+                td4.innerHTML = conditionOfGame;
+                td5.innerHTML = maturityLevel;
+                td6.innerHTML = numberOfPlayers;
+                td7.innerHTML = playtimeInMinutes;
+                td8.innerHTML = tags;
 
                 row.appendChild(td1);
                 row.appendChild(td2);
@@ -392,6 +409,14 @@
                 row.appendChild(td8);
 
                 table.children[0].insertBefore(row, table.children[0].childNodes[2]);
+
+                //All rows are centered and have 10px padding
+                var tableRows = document.getElementsByTagName("tr");
+                var j;
+                for (j = 0; j < tableRows.length; j++) {
+                    tableRows[j].style.textAlign = "center";
+                    tableRows[j].style.padding = "10px";
+                }
 
                 //Add edit button to each row created
                 var editButton = document.createElement("button");
@@ -500,46 +525,48 @@
                 <option value="">--Choose Tag--</option>
                 <option value="Cooperative">Cooperative</option>
                 <option value="Competitive">Competitive</option>
+                <option value="Solo">Solo</option>
                 <option value="Party">Party</option>
                 <option value="Family">Family</option>
                 <option value="Abstract">Abstract</option>
-                <option value="Thematic">Thematic</option>
-                <option value="Strategy">Strategy</option>
+                <option value="Dexterity">Dexterity</option>
                 <option value="Dice">Dice</option>
                 <option value="Card">Card</option>
                 <option value="Deck Building">Deck Building</option>
-                <option value="Worker Placement">Worker Placement</option>
-                <option value="Area Control">Area Control</option>
-                <option value="Tile Placement">Tile Placement</option>
                 <option value="Hand Management">Hand Management</option>
-                <option value="Variable Player Powers">Variable Player Powers</option>
-                <option value="Set Collection">Set Collection</option>
-                <option value="Modular Board">Modular Board</option>
-                <option value="Grid Movement">Grid Movement</option>
-                <option value="Campaign / Battle Card Driven">Campaign / Battle Card Driven</option>
-                <option value="Point to Point Movement">Point to Point Movement</option>
-                <option value="Pattern Building">Pattern Building</option>
-                <option value="Roll / Spin and Move">Roll / Spin and Move</option>
-                <option value="Simulation">Simulation</option>
-                <option value="Action / Movement Programming">Action / Movement Programming</option>
+                <option value="Worker Placement">Worker Placement</option>
+                <option value="Tile Placement">Tile Placement</option>
+                <option value="Area Control">Area Control</option>
+                <option value="Area Influence">Area Influence</option>
                 <option value="Area Movement">Area Movement</option>
+                <option value="Grid Movement">Grid Movement</option>
+                <option value="Set Collection">Set Collection</option>
+                <option value="Pattern Building">Pattern Building</option>
                 <option value="Memory">Memory</option>
-                <option value="Pattern Recognition">Pattern Recognition</option>
+                <option value="Auction">Auction</option>
+                <option value="Bluffing">Bluffing</option>
+                <option value="Betting">Betting</option>
+                <option value="Campaign">Campaign</option>
+                <option value="Modular Board">Modular Board</option>
+                <option value="Paper and Pencil">Paper and Pencil</option>
+                <option value="Partnerships">Partnerships</option>
+                <option value="Pattern Building">Pattern Building</option>
+                <option value="Pick-up and Deliver">Pick-up and Deliver</option>
+                <option value="Player Elimination">Player Elimination</option>
+                <option value="Point to Point Movement">Point to Point Movement</option>
+                <option value="Press Your Luck">Press Your Luck</option>
                 <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
+                <option value="Roll / Spin and Move">Roll / Spin and Move</option>
                 <option value="Secret Unit Deployment">Secret Unit Deployment</option>
+                <option value="Simulation">Simulation</option>
+                <option value="Simultaneous Action Selection">Simultaneous Action Selection</option>
                 <option value="Storytelling">Storytelling</option>
-                <option value="Trick-taking">Trick-taking</option>
+                <option value="Take That">Take That</option>
+                <option value="Time Track">Time Track</option>
+                <option value="Trading">Trading</option>
+                <option value="Variable Player Powers">Variable Player Powers</option>
                 <option value="Voting">Voting</option>
-                <option value="Deduction">Deduction</option>
-                <option value="Dice Rolling">Dice Rolling</option>
-                <option value="Paper-and-Pencil">Paper-and-Pencil</option>
-                <option value="Part of a Series">Part of a Series</option>
-                <option value="Reimplementation">Reimplementation</option>
-                <option value="Revised Edition">Revised Edition</option>
-                <option value="Sequel">Sequel</option>
-                <option value="Spin-off">Spin-off</option>
-                <option value="Stand-alone Expansion">Stand-alone Expansion</option>
-                <option value="Storytelling">Storytelling</option>
+                <option value="Worker Placement">Worker Placement</option>
             </select>
         </p>
         <button onclick="publishToTable()">Add</button>
