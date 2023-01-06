@@ -318,6 +318,8 @@
                 tableRows[i].style.textAlign = "center";
                 tableRows[i].style.padding = "10px";
             }
+            var games = Object.keys(localStorage);
+            localStorage.removeItem(games[i]);
         }
     }
 </script>
