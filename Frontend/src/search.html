@@ -1,245 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="gamePage.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="gamePage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
+<script>
+    function searchToTable(document, searchString) {
+        let index = document.indexOf(searchString);
+        if (index === -1) {
+            return 'Search string not found';
+        } else {
+            return `Search string found at index ${index}`;
+        }
+    }
+    let document = 'This is a sample document';
+    let searchString = 'sample';
+    console.log(searchDocument(document, searchString));
+</script>
 <body class="background">
 <header class="header" id="header">
-  <div class="site-title">
-    <a class="header_home" href="search.html">iAmBoard</a>
-  </div>
+    <div class="site-title">
+        <a class="header_home" href="search.html">iAmBoard</a>
+    </div>
     <div>
-        <a href="index.html">Go to Index Page</a>
+        <a href="index.html"><button>Go to Index Page</button></a>
     </div>
 </header>
 <div class="card">
-  <h2>Search By</h2>
-  <form class="card-content" id="get-by-id-form">
-    <p class="form-field">
-      <label>Title</label>
-      <input type="text" required class="validated-field" id="id-field">
-      <label>Genre</label>
-      <select id="genre-field">
-        <option value="">--Choose A Genre--</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-        <option value="Arcade">Arcade</option>
-        <option value="Board">Board</option>
-        <option value="Card">Card</option>
-        <option value="Casino">Casino</option>
-        <option value="Casual">Casual</option>
-        <option value="Educational">Educational</option>
-        <option value="Family">Family</option>
-        <option value="Music">Music</option>
-        <option value="Puzzle">Puzzle</option>
-        <option value="Racing">Racing</option>
-        <option value="Role Playing">Role Playing</option>
-        <option value="Simulation">Simulation</option>
-        <option value="Sports">Sports</option>
-        <option value="Strategy">Strategy</option>
-        <option value="Trivia">Trivia</option>
-        <option value="Word">Word</option>
-      </select>
-      <label>Weight of Game</label>
-      <select id="weight-field">
-        <option value="">--Choose Weight of Game--</option>
-        <option value="Light">Light</option>
-        <option value="Medium Light">Medium Light</option>
-        <option value="Medium">Medium</option>
-        <option value="Medium Heavy">Medium Heavy</option>
-        <option value="Heavy">Heavy</option>
-      </select>
-      <label>Condition of Game</label>
-      <select id="condition-field">
-        <option value="">--Choose Condition of Game--</option>
-        <option value="New">New</option>
-        <option value="Like New">Like New</option>
-        <option value="Good">Good</option>
-        <option value="Fair">Fair</option>
-        <option value="Poor">Poor</option>
-      </select>
-      <label>Maturity Level</label>
-      <select id="maturity-field">
-        <option value="">--Choose Maturity Level--</option>
-        <option value="4+">4+</option>
-        <option value="8+">8+</option>
-        <option value="12+">12+</option>
-        <option value="16+">16+</option>
-      </select>
-      <label># of Players</label>
-      <select id="number-of-players-field">
-        <option value="">--Choose # of Players--</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-      </select>
-      <label>Playtime in Minutes</label>
-      <select id="playtime-field">
-        <option value="">--Choose Playtime--</option>
-        <option value="15">15</option>
-        <option value="30">30</option>
-        <option value="45">45</option>
-        <option value="60">60</option>
-        <option value="75">75</option>
-        <option value="90">90</option>
-        <option value="105">105</option>
-        <option value="120">120</option>
-      </select>
-      <label>Tag</label>
-      <select id="tags-field">
-        <option value="">--Choose Tag--</option>
-        <option value="Cooperative">Cooperative</option>
-        <option value="Competitive">Competitive</option>
-        <option value="Party">Party</option>
-        <option value="Family">Family</option>
-        <option value="Abstract">Abstract</option>
-        <option value="Thematic">Thematic</option>
-        <option value="Strategy">Strategy</option>
-        <option value="Dice">Dice</option>
-        <option value="Card">Card</option>
-        <option value="Deck Building">Deck Building</option>
-        <option value="Worker Placement">Worker Placement</option>
-        <option value="Area Control">Area Control</option>
-        <option value="Tile Placement">Tile Placement</option>
-        <option value="Hand Management">Hand Management</option>
-        <option value="Variable Player Powers">Variable Player Powers</option>
-        <option value="Set Collection">Set Collection</option>
-        <option value="Modular Board">Modular Board</option>
-        <option value="Grid Movement">Grid Movement</option>
-        <option value="Campaign / Battle Card Driven">Campaign / Battle Card Driven</option>
-        <option value="Point to Point Movement">Point to Point Movement</option>
-        <option value="Pattern Building">Pattern Building</option>
-        <option value="Roll / Spin and Move">Roll / Spin and Move</option>
-        <option value="Simulation">Simulation</option>
-        <option value="Action / Movement Programming">Action / Movement Programming</option>
-        <option value="Area Movement">Area Movement</option>
-        <option value="Memory">Memory</option>
-        <option value="Pattern Recognition">Pattern Recognition</option>
-        <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
-        <option value="Secret Unit Deployment">Secret Unit Deployment</option>
-        <option value="Storytelling">Storytelling</option>
-        <option value="Trick-taking">Trick-taking</option>
-        <option value="Voting">Voting</option>
-        <option value="Deduction">Deduction</option>
-        <option value="Dice Rolling">Dice Rolling</option>
-        <option value="Paper-and-Pencil">Paper-and-Pencil</option>
-        <option value="Part of a Series">Part of a Series</option>
-        <option value="Reimplementation">Reimplementation</option>
-        <option value="Revised Edition">Revised Edition</option>
-        <option value="Sequel">Sequel</option>
-        <option value="Spin-off">Spin-off</option>
-        <option value="Stand-alone Expansion">Stand-alone Expansion</option>
-        <option value="Storytelling">Storytelling</option>
-      </select>
-    </p>
-    <button type="submit">Search</button>
-  </form>
+    <h2>Search By</h2>
+    <form class="card-content" id="get-by-id-form">
+        <p class="form-field">
+            <label>Title</label>
+            <input type="text" required class="validated-field" id="id-field">
+        </p>
+        <button onclick="searchToTable()">Search</button>
+    </form>
 </div>
 <div class="card" id="result">
-  <h2>Search Results</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>Title</th>
-      <th>Genre</th>
-      <th>Weight</th>
-      <th>Condition</th>
-      <th>Maturity</th>
-      <th>Players</th>
-      <th>Playtime</th>
-      <th>Tags</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Row 1, Column 1</td>
-      <td>Row 1, Column 2</td>
-      <td>Row 1, Column 3</td>
-      <td>Row 1, Column 4</td>
-      <td>Row 1, Column 5</td>
-      <td>Row 1, Column 6</td>
-      <td>Row 1, Column 7</td>
-      <td>Row 1, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 2, Column 1</td>
-      <td>Row 2, Column 2</td>
-      <td>Row 2, Column 3</td>
-      <td>Row 2, Column 4</td>
-      <td>Row 2, Column 5</td>
-      <td>Row 2, Column 6</td>
-      <td>Row 2, Column 7</td>
-      <td>Row 2, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 3, Column 1</td>
-      <td>Row 3, Column 2</td>
-      <td>Row 3, Column 3</td>
-      <td>Row 3, Column 4</td>
-      <td>Row 3, Column 5</td>
-      <td>Row 3, Column 6</td>
-      <td>Row 3, Column 7</td>
-      <td>Row 3, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 4, Column 1</td>
-      <td>Row 4, Column 2</td>
-      <td>Row 4, Column 3</td>
-      <td>Row 4, Column 4</td>
-      <td>Row 4, Column 5</td>
-      <td>Row 4, Column 6</td>
-      <td>Row 4, Column 7</td>
-      <td>Row 4, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 5, Column 1</td>
-      <td>Row 5, Column 2</td>
-      <td>Row 5, Column 3</td>
-      <td>Row 5, Column 4</td>
-      <td>Row 5, Column 5</td>
-      <td>Row 5, Column 6</td>
-      <td>Row 5, Column 7</td>
-      <td>Row 5, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 6, Column 1</td>
-      <td>Row 6, Column 2</td>
-      <td>Row 6, Column 3</td>
-      <td>Row 6, Column 4</td>
-      <td>Row 6, Column 5</td>
-      <td>Row 6, Column 6</td>
-      <td>Row 6, Column 7</td>
-      <td>Row 6, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 7, Column 1</td>
-      <td>Row 7, Column 2</td>
-      <td>Row 7, Column 3</td>
-      <td>Row 7, Column 4</td>
-      <td>Row 7, Column 5</td>
-      <td>Row 7, Column 6</td>
-      <td>Row 7, Column 7</td>
-      <td>Row 7, Column 8</td>
-    </tr>
-    <tr>
-      <td>Row 8, Column 1</td>
-      <td>Row 8, Column 2</td>
-      <td>Row 8, Column 3</td>
-      <td>Row 8, Column 4</td>
-      <td>Row 8, Column 5</td>
-      <td>Row 8, Column 6</td>
-      <td>Row 8, Column 7</td>
-      <td>Row 8, Column 8</td>
-    </tr>
-    </tbody>
-  </table>
-  <p id="result-info"></p>
+    <h2>Search Results</h2>
+    <table id="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Weight of Game</th>
+            <th>Condition of Game</th>
+            <th>Maturity Level</th>
+            <th># of Players</th>
+            <th>Playtime in Minutes</th>
+            <th>Tags</th>
+        </tr>
+        </thead>
+    </table>
+    <!--        <p id="result-info"></p>-->
 </div>
-
 </body>
 </html>

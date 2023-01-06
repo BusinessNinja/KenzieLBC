@@ -391,7 +391,7 @@
         <a class="header_home" href="index.html">iAmBoard</a>
     </div>
     <div>
-        <a href="search.html">Go to Search Page</a>
+        <a href="search.html"><button>Go to Search Page</button></a>
     </div>
 </header>
 <div class="card">
@@ -399,9 +399,9 @@
     <form class="card-content" id="create-game-form">
         <p class="form-field">
             <label>Title</label>
-            <input type="text" required class="validated-field" id="create-game-gametitle">
+            <input required type="text" class="validated-field" id="create-game-gametitle">
             <label>Genre</label>
-            <select id="create-game-genre">
+            <select required id="create-game-genre">
                 <option value="">--Choose A Genre--</option>
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
@@ -423,7 +423,7 @@
                 <option value="Word">Word</option>
             </select>
             <label>Weight of Game</label>
-            <select id="create-game-weightofgame">
+            <select required id="create-game-weightofgame">
                 <option value="">--Choose Weight of Game--</option>
                 <option value="Light">Light</option>
                 <option value="Medium Light">Medium Light</option>
@@ -432,7 +432,7 @@
                 <option value="Heavy">Heavy</option>
             </select>
             <label>Condition of Game</label>
-            <select id="create-game-conditionofgame">
+            <select required id="create-game-conditionofgame">
                 <option value="">--Choose Condition of Game--</option>
                 <option value="New">New</option>
                 <option value="Like New">Like New</option>
@@ -441,7 +441,7 @@
                 <option value="Poor">Poor</option>
             </select>
             <label>Maturity Level</label>
-            <select id="create-game-maturitylevel">
+            <select required id="create-game-maturitylevel">
                 <option value="">--Choose Maturity Level--</option>
                 <option value="4+">4+</option>
                 <option value="8+">8+</option>
@@ -449,7 +449,7 @@
                 <option value="16+">16+</option>
             </select>
             <label># of Players</label>
-            <select id="create-game-numberofplayers">
+            <select required id="create-game-numberofplayers">
                 <option value="">--Choose # of Players--</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -459,7 +459,7 @@
                 <option value="6">6</option>
             </select>
             <label>Playtime in Minutes</label>
-            <select id="create-game-playtimeinminutes">
+            <select required id="create-game-playtimeinminutes">
                 <option value="">--Choose Playtime--</option>
                 <option value="15">15</option>
                 <option value="30">30</option>
@@ -471,7 +471,7 @@
                 <option value="120">120</option>
             </select>
             <label>Tag</label>
-            <select id="create-game-tags">
+            <select required id="create-game-tags">
                 <option value="">--Choose Tag--</option>
                 <option value="Cooperative">Cooperative</option>
                 <option value="Competitive">Competitive</option>
