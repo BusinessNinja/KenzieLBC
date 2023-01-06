@@ -120,7 +120,7 @@
             var content = cell.innerHTML;
             options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
                 "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
-            options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
+            options2 = ["Light", "Medium Light", "Medium", "Medium Heavy", "Heavy"];
             options3 = ["New", "Like New", "Good", "Fair", "Poor"];
             options4 = ["4+", "8+", "12+", "16+"];
             options5 = ["1", "2", "3", "4", "5", "6"];
@@ -256,20 +256,21 @@
             }
         }
 
-        r.style.display = "none";
-        //Add save button to each row being edited
-        var saveButton = document.createElement("button");
-        saveButton.innerHTML = "Save";
-        saveButton.setAttribute("onclick", "saveRow(this)");
-        saveButton.setAttribute("class", "saveButton");
-        row.appendChild(saveButton);
+            r.style.display = "none";
+            //Add save button to each row being edited
+            var saveButton = document.createElement("button");
+            saveButton.innerHTML = "Save";
+            saveButton.setAttribute("onclick", "saveRow(this)");
+            saveButton.setAttribute("class", "saveButton");
+            row.appendChild(saveButton);
 
-        //Add cancel button to each row being edited
-        var cancelButton = document.createElement("button");
-        cancelButton.innerHTML = "Cancel";
-        cancelButton.setAttribute("onclick", "cancelRow(this)");
-        cancelButton.setAttribute("class", "cancelButton");
-        row.appendChild(cancelButton);
+            //Add cancel button to each row being edited
+            var cancelButton = document.createElement("button");
+            cancelButton.innerHTML = "Cancel";
+            cancelButton.setAttribute("onclick", "cancelRow(this)");
+            cancelButton.setAttribute("class", "cancelButton");
+            row.appendChild(cancelButton);
+
     }
 </script>
 <script>
