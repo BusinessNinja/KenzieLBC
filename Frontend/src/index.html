@@ -38,51 +38,55 @@
 
         table.children[0].insertBefore(row, table.children[0].childNodes[2]);
 
-        //If any of the fields are empty, don't add the game to the table
-        if (td1.innerHTML === "" || td2.innerHTML === "" || td3.innerHTML === "" || td4.innerHTML === "" ||
-            td5.innerHTML === "" || td6.innerHTML === "" || td7.innerHTML === "" || td8.innerHTML === "") {
-            row.remove();
-        }
-
-        //Save games to local storage so they persist after page refresh or close
+//Save games to local storage so they persist after page refresh or close
         //Each game is assigned a unique ID so that it can be deleted or updated later
         //The ID is randomly generated and checked to make sure it is unique
         var id = Math.floor(Math.random() * 1000000000);
         while (localStorage.getItem(id) !== null) {
             id = Math.floor(Math.random() * 1000000000);
         }
-        localStorage.setItem(id, JSON.stringify({
-            "gameTitle": td1.innerHTML,
-            "genre": td2.innerHTML,
-            "weightOfGame": td3.innerHTML,
-            "conditionOfGame": td4.innerHTML,
-            "maturityLevel": td5.innerHTML,
-            "numberOfPlayers": td6.innerHTML,
-            "playtimeInMinutes": td7.innerHTML,
-            "tags": td8.innerHTML
-        }));
 
-        //Each new row adjusts to center the information added
-        var tableRows = document.getElementsByTagName("tr");
-        for (var i = 0; i < tableRows.length; i++) {
-            tableRows[i].style.textAlign = "center";
-            tableRows[i].style.padding = "10px";
+        //If any of the fields are empty, don't add the game to the table
+        if (td1.innerHTML === "" || td2.innerHTML === "" || td3.innerHTML === "" || td4.innerHTML === "" ||
+            td5.innerHTML === "" || td6.innerHTML === "" || td7.innerHTML === "" || td8.innerHTML === "") {
+            row.remove();
+
+
+        } else {
+            localStorage.setItem(id, JSON.stringify({
+                "gameTitle": td1.innerHTML,
+                "genre": td2.innerHTML,
+                "weightOfGame": td3.innerHTML,
+                "conditionOfGame": td4.innerHTML,
+                "maturityLevel": td5.innerHTML,
+                "numberOfPlayers": td6.innerHTML,
+                "playtimeInMinutes": td7.innerHTML,
+                "tags": td8.innerHTML
+
+            }));
+
+            //Each new row adjusts to center the information added
+            var tableRows = document.getElementsByTagName("tr");
+            for (var i = 0; i < tableRows.length; i++) {
+                tableRows[i].style.textAlign = "center";
+                tableRows[i].style.padding = "10px";
+            }
+
+            //Add edit button to each row created
+            var editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            editButton.setAttribute("onclick", "editRow(this)");
+            editButton.setAttribute("class", "editButton");
+            row.appendChild(editButton);
+
+            //Add delete button to each row created
+            var deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.setAttribute("onclick", "deleteRow(this)");
+            deleteButton.setAttribute("class", "deleteButton");
+            row.appendChild(deleteButton);
+
         }
-
-        //Add edit button to each row created
-        var editButton = document.createElement("button");
-        editButton.innerHTML = "Edit";
-        editButton.setAttribute("onclick", "editRow(this)");
-        editButton.setAttribute("class", "editButton");
-        row.appendChild(editButton);
-
-        //Add delete button to each row created
-        var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "Delete";
-        deleteButton.setAttribute("onclick", "deleteRow(this)");
-        deleteButton.setAttribute("class", "deleteButton");
-        row.appendChild(deleteButton);
-
     }
 </script>
 <script>
@@ -303,7 +307,6 @@
 
             //If user clicks "Cancel", all changes are not saved
             //Fields close and revert back to original values
-
         }
     }
 </script>
@@ -313,6 +316,7 @@
             var row = r.parentNode.parentNode;
             row.removeChild(r.parentNode);
             var tableRows = document.getElementsByTagName("tr");
+
             var i;
             for (i = 0; i < tableRows.length; i++) {
                 tableRows[i].style.textAlign = "center";
