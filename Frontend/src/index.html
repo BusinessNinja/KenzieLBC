@@ -7,16 +7,16 @@
 </head>
 <script>
     function publishToTable() {
-        var table = document.getElementById("table");
-        var row = document.createElement("tr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
-        var td3 = document.createElement("td");
-        var td4 = document.createElement("td");
-        var td5 = document.createElement("td");
-        var td6 = document.createElement("td");
-        var td7 = document.createElement("td");
-        var td8 = document.createElement("td");
+        let table = document.getElementById("table");
+        let row = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
+        let td5 = document.createElement("td");
+        let td6 = document.createElement("td");
+        let td7 = document.createElement("td");
+        let td8 = document.createElement("td");
 
         td1.innerHTML = document.getElementById("create-game-gametitle").value;
         td2.innerHTML = document.getElementById("create-game-genre").value;
@@ -38,55 +38,53 @@
 
         table.children[0].insertBefore(row, table.children[0].childNodes[2]);
 
-//Save games to local storage so they persist after page refresh or close
-        //Each game is assigned a unique ID so that it can be deleted or updated later
-        //The ID is randomly generated and checked to make sure it is unique
-        var id = Math.floor(Math.random() * 1000000000);
-        while (localStorage.getItem(id) !== null) {
-            id = Math.floor(Math.random() * 1000000000);
-        }
-
         //If any of the fields are empty, don't add the game to the table
         if (td1.innerHTML === "" || td2.innerHTML === "" || td3.innerHTML === "" || td4.innerHTML === "" ||
             td5.innerHTML === "" || td6.innerHTML === "" || td7.innerHTML === "" || td8.innerHTML === "") {
             row.remove();
-
-
-        } else {
-            localStorage.setItem(id, JSON.stringify({
-                "gameTitle": td1.innerHTML,
-                "genre": td2.innerHTML,
-                "weightOfGame": td3.innerHTML,
-                "conditionOfGame": td4.innerHTML,
-                "maturityLevel": td5.innerHTML,
-                "numberOfPlayers": td6.innerHTML,
-                "playtimeInMinutes": td7.innerHTML,
-                "tags": td8.innerHTML
-
-            }));
-
-            //Each new row adjusts to center the information added
-            var tableRows = document.getElementsByTagName("tr");
-            for (var i = 0; i < tableRows.length; i++) {
-                tableRows[i].style.textAlign = "center";
-                tableRows[i].style.padding = "10px";
-            }
-
-            //Add edit button to each row created
-            var editButton = document.createElement("button");
-            editButton.innerHTML = "Edit";
-            editButton.setAttribute("onclick", "editRow(this)");
-            editButton.setAttribute("class", "editButton");
-            row.appendChild(editButton);
-
-            //Add delete button to each row created
-            var deleteButton = document.createElement("button");
-            deleteButton.innerHTML = "Delete";
-            deleteButton.setAttribute("onclick", "deleteRow(this)");
-            deleteButton.setAttribute("class", "deleteButton");
-            row.appendChild(deleteButton);
-
+            //Prevent any empty fields to be added to local storage
+            return;
         }
+
+        //Saves the game to local storage
+        let game = {
+            title: td1.innerHTML,
+            genre: td2.innerHTML,
+            weight: td3.innerHTML,
+            condition: td4.innerHTML,
+            maturity: td5.innerHTML,
+            players: td6.innerHTML,
+            time: td7.innerHTML,
+            tags: td8.innerHTML
+        };
+
+        let games = JSON.parse(localStorage.getItem("games"));
+        if (games === null) {
+            games = [];
+        }
+        games.push(game);
+        localStorage.setItem("games", JSON.stringify(games));
+
+        //Each new row adjusts to center the information added
+        let tableRows = document.getElementsByTagName("tr");
+        for (let i = 0; i < tableRows.length; i++) {
+            tableRows[i].style.textAlign = "center";
+        }
+
+        //Add edit button to each row created
+        let editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        editButton.setAttribute("onclick", "editRow(this)");
+        editButton.setAttribute("class", "editButton");
+        row.appendChild(editButton);
+
+        //Add delete button to each row created
+        let deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+        deleteButton.setAttribute("onclick", "deleteRow(this)");
+        deleteButton.setAttribute("class", "deleteButton");
+        row.appendChild(deleteButton);
+
     }
 </script>
 <script>
@@ -94,37 +92,37 @@
         //Only one row can be edited at a time
         //If a row is already being edited, the user must finish editing that row before editing another
         //Only the row the edit button is clicked on will be editable
-        var x = document.getElementsByClassName("editButton");
-        var i;
+        let x = document.getElementsByClassName("editButton");
+        let i;
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
-        var y = document.getElementsByClassName("deleteButton");
-        var j;
+        let y = document.getElementsByClassName("deleteButton");
+        let j;
         for (j = 0; j < y.length; j++) {
             y[j].style.display = "none";
         }
-        var z = document.getElementsByClassName("saveButton");
-        var k;
+        let z = document.getElementsByClassName("saveButton");
+        let k;
         for (k = 0; k < z.length; k++) {
             z[k].style.display = "none";
         }
-        var l = document.getElementsByClassName("cancelButton");
-        var m;
+        let l = document.getElementsByClassName("cancelButton");
+        let m;
         for (m = 0; m < l.length; m++) {
             l[m].style.display = "none";
         }
 
         //Only the row the edit button is clicked on will be editable
-        var row = r.parentNode;
-        var cells = row.getElementsByTagName("td");
-        var b;
+        let row = r.parentNode;
+        let cells = row.getElementsByTagName("td");
+        let b;
         for (b = 0; b < cells.length; b++) {
-            var cell = cells[b];
-            var content = cell.innerHTML;
+            let cell = cells[b];
+            let content = cell.innerHTML;
             options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
                 "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
-            options2 = ["Light", "Medium Light", "Medium", "Medium Heavy", "Heavy"];
+            options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
             options3 = ["New", "Like New", "Good", "Fair", "Poor"];
             options4 = ["4+", "8+", "12+", "16+"];
             options5 = ["1", "2", "3", "4", "5", "6"];
@@ -139,13 +137,13 @@
                 "Simultaneous Action Selection", "Storytelling", "Take That", "Time Track", "Trading",
                 "Variable Player Powers", "Voting", "Worker Placement"];
             if (b === 1) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-genre");
                 select.setAttribute("class", "edit-game-genre");
                 select.setAttribute("name", "edit-game-genre");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options1.length; i++) {
+                let option;
+                for (let i = 0; i < options1.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options1[i]);
                     option.text = options1[i];
@@ -155,13 +153,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 2) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-weightofgame");
                 select.setAttribute("class", "edit-game-weightofgame");
                 select.setAttribute("name", "edit-game-weightofgame");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options2.length; i++) {
+                let option;
+                for (let i = 0; i < options2.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options2[i]);
                     option.text = options2[i];
@@ -171,13 +169,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 3) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-conditionofgame");
                 select.setAttribute("class", "edit-game-conditionofgame");
                 select.setAttribute("name", "edit-game-conditionofgame");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options3.length; i++) {
+                let option;
+                for (let i = 0; i < options3.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options3[i]);
                     option.text = options3[i];
@@ -187,13 +185,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 4) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-maturitylevel");
                 select.setAttribute("class", "edit-game-maturitylevel");
                 select.setAttribute("name", "edit-game-maturitylevel");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options4.length; i++) {
+                let option;
+                for (let i = 0; i < options4.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options4[i]);
                     option.text = options4[i];
@@ -203,13 +201,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 5) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-numberofplayers");
                 select.setAttribute("class", "edit-game-numberofplayers");
                 select.setAttribute("name", "edit-game-numberofplayers");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options5.length; i++) {
+                let option;
+                for (let i = 0; i < options5.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options5[i]);
                     option.text = options5[i];
@@ -219,13 +217,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 6) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-playtime");
                 select.setAttribute("class", "edit-game-playtime");
                 select.setAttribute("name", "edit-game-playtime");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options6.length; i++) {
+                let option;
+                for (let i = 0; i < options6.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options6[i]);
                     option.text = options6[i];
@@ -235,13 +233,13 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else if (b === 7) {
-                var select = document.createElement("select");
+                let select = document.createElement("select");
                 select.setAttribute("id", "edit-game-tags");
                 select.setAttribute("class", "edit-game-tags");
                 select.setAttribute("name", "edit-game-tags");
                 select.setAttribute("required", "required");
-                var option;
-                for (var i = 0; i < options7.length; i++) {
+                let option;
+                for (let i = 0; i < options7.length; i++) {
                     option = document.createElement("option");
                     option.setAttribute("value", options7[i]);
                     option.text = options7[i];
@@ -251,7 +249,7 @@
                 cell.innerHTML = "";
                 cell.appendChild(select);
             } else {
-                var input = document.createElement("input");
+                let input = document.createElement("input");
                 input.setAttribute("type", "text");
                 input.setAttribute("value", content);
                 input.setAttribute("class", "edit-game");
@@ -260,150 +258,162 @@
             }
         }
 
-            r.style.display = "none";
-            //Add save button to each row being edited
-            var saveButton = document.createElement("button");
-            saveButton.innerHTML = "Save";
-            saveButton.setAttribute("onclick", "saveRow(this)");
-            saveButton.setAttribute("class", "saveButton");
-            row.appendChild(saveButton);
+        r.style.display = "none";
+        //Add save button to each row being edited
+        let saveButton = document.createElement("button");
+        saveButton.innerHTML = "Save";
+        saveButton.setAttribute("onclick", "saveRow(this)");
+        saveButton.setAttribute("class", "saveButton");
+        row.appendChild(saveButton);
 
-            //Add cancel button to each row being edited
-            var cancelButton = document.createElement("button");
-            cancelButton.innerHTML = "Cancel";
-            cancelButton.setAttribute("onclick", "cancelRow(this)");
-            cancelButton.setAttribute("class", "cancelButton");
-            row.appendChild(cancelButton);
-
+        //Add cancel button to each row being edited
+        let cancelButton = document.createElement("button");
+        cancelButton.innerHTML = "Cancel";
+        cancelButton.setAttribute("onclick", "cancelRow(this)");
+        cancelButton.setAttribute("class", "cancelButton");
+        row.appendChild(cancelButton);
     }
 </script>
 <script>
     function cancelRow() {
-        //Doesn't save the fields that were edited and all fields revert back to original values
         //If user clicks "OK", the row is left as is
         //Save and Cancel buttons are removed
         //Edit and Delete buttons are added back to original location
         if (confirm("Are you sure you want to cancel? All changes will be lost.")) {
-            var x = document.getElementsByClassName("editButton");
-            var a;
+            let x = document.getElementsByClassName("editButton");
+            let a;
             for (a = 0; a < x.length; a++) {
                 x[a].style.display = "inline";
             }
-            var y = document.getElementsByClassName("deleteButton");
-            var j;
+            let y = document.getElementsByClassName("deleteButton");
+            let j;
             for (j = 0; j < y.length; j++) {
                 y[j].style.display = "inline";
             }
-            var z = document.getElementsByClassName("saveButton");
-            var k;
+            let z = document.getElementsByClassName("saveButton");
+            let k;
             for (k = 0; k < z.length; k++) {
                 z[k].style.display = "none";
             }
-            var l = document.getElementsByClassName("cancelButton");
-            var m;
+            let l = document.getElementsByClassName("cancelButton");
+            let m;
             for (m = 0; m < l.length; m++) {
                 l[m].style.display = "none";
             }
-
-            //If user clicks "Cancel", all changes are not saved
-            //Fields close and revert back to original values
+            //All changed fields revert back to default
+            let table = document.getElementById("table");
+            let rows = table.rows;
+            let i;
+            for (i = 1; i < rows.length; i++) {
+                let row = rows[i];
+                let cells = row.cells;
+                let j;
+                for (j = 0; j < cells.length; j++) {
+                    let cell = cells[j];
+                    let content = cell.getAttribute("data-default");
+                    cell.innerHTML = content;
+                }
+            }
         }
     }
 </script>
 <script>
     function deleteRow(r) {
         if (confirm("Are you sure you want to delete this game?")) {
-            var row = r.parentNode.parentNode;
+            let row = r.parentNode.parentNode;
             row.removeChild(r.parentNode);
-            var tableRows = document.getElementsByTagName("tr");
-
-            var i;
+            let tableRows = document.getElementsByTagName("tr");
+            let i;
             for (i = 0; i < tableRows.length; i++) {
                 tableRows[i].style.textAlign = "center";
-                tableRows[i].style.padding = "10px";
             }
-            var games = Object.keys(localStorage);
-            localStorage.removeItem(games[i]);
+            //delete from local storage
+            let list = localStorage.getItem("list");
+            list = JSON.parse(list);
+            let game = list.filter(item => item.key !== r.parentNode)
+            localStorage.removeItem(game);
         }
     }
 </script>
 <script>
     function saveRow(r) {
-        // saves changes made to the row and removes the save and cancel buttons
         // edit and delete buttons are re-added back to original location
-        var x = document.getElementsByClassName("editButton");
-        var a;
+        let x = document.getElementsByClassName("editButton");
+        let a;
         for (a = 0; a < x.length; a++) {
             x[a].style.display = "inline";
         }
-        var y = document.getElementsByClassName("deleteButton");
-        var j;
+        let y = document.getElementsByClassName("deleteButton");
+        let j;
         for (j = 0; j < y.length; j++) {
             y[j].style.display = "inline";
         }
-        var z = document.getElementsByClassName("saveButton");
-        var k;
+        let z = document.getElementsByClassName("saveButton");
+        let k;
         for (k = 0; k < z.length; k++) {
             z[k].style.display = "none";
         }
-        var l = document.getElementsByClassName("cancelButton");
-        var m;
+        let l = document.getElementsByClassName("cancelButton");
+        let m;
         for (m = 0; m < l.length; m++) {
             l[m].style.display = "none";
         }
-        var row = r.parentNode.parentNode;
-        var cells = row.getElementsByTagName("td");
-        var i;
+
+        // changes made to fields are saved and displayed to the table
+        // all fields are no longer editable
+        let row = r.parentNode.parentNode;
+        let cells = row.cells;
+        let i;
         for (i = 0; i < cells.length; i++) {
-            var cell = cells[i];
-            if (cell.getElementsByTagName("input").length > 0) {
-                cell.innerHTML = cell.getElementsByTagName("input")[0].value;
-            } else if (cell.getElementsByTagName("select").length > 0) {
-                cell.innerHTML = cell.getElementsByTagName("select")[0].value;
+            let cell = cells[i];
+            let content = cell.innerHTML;
+            if (cell.getAttribute("data-default") !== content) {
+                cell.setAttribute("data-default", content);
             }
         }
+        let game = {
+            key: row,
+            gameTitle: row.cells[0].innerHTML,
+            genre: row.cells[1].innerHTML,
+            weightOfGame: row.cells[2].innerHTML,
+            conditionOfGame: row.cells[3].innerHTML,
+            maturityLevel: row.cells[4].innerHTML,
+            numberOfPlayers: row.cells[5].innerHTML,
+            playtimeInMinutes: row.cells[6].innerHTML,
+            tags: row.cells[7].innerHTML,
+        }
+        let list = localStorage.getItem("list");
+        list = JSON.parse(list);
+        list.push(game);
+        localStorage.setItem("list", JSON.stringify(list));
     }
 </script>
 <script>
     function displayGames() {
-        //All keys stored in local storage are retrieved and displayed in the table
-        //All information is retrieved from local storage and displayed in the table
-        //Proper fields are displayed in the table within the proper cells
+        //All games saved in local storage are displayed in the table
         //Each row has an edit and delete button
-        var table = document.getElementById("table");
-        //Games = all keys stored in local storage added by the user
-        var games = Object.keys(localStorage);
+        let table = document.getElementById("table");
+        let games = JSON.parse(localStorage.getItem("games"));
         if (games !== null) {
-            for (var i = 0; i < games.length; i++) {
-                var row = document.createElement("tr");
-                var td1 = document.createElement("td");
-                var td2 = document.createElement("td");
-                var td3 = document.createElement("td");
-                var td4 = document.createElement("td");
-                var td5 = document.createElement("td");
-                var td6 = document.createElement("td");
-                var td7 = document.createElement("td");
-                var td8 = document.createElement("td");
+            for (let i = 0; i < games.length; i++) {
+                let row = document.createElement("tr");
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                let td3 = document.createElement("td");
+                let td4 = document.createElement("td");
+                let td5 = document.createElement("td");
+                let td6 = document.createElement("td");
+                let td7 = document.createElement("td");
+                let td8 = document.createElement("td");
 
-                //Parsing the JSON string retrieved from local storage
-                var game = JSON.parse(localStorage.getItem(games[i]));
-                var gameTitle = game.gameTitle;
-                var genre = game.genre;
-                var weightOfGame = game.weightOfGame;
-                var conditionOfGame = game.conditionOfGame;
-                var maturityLevel = game.maturityLevel;
-                var numberOfPlayers = game.numberOfPlayers;
-                var playtimeInMinutes = game.playtimeInMinutes;
-                var tags = game.tags;
-
-                td1.innerHTML = gameTitle;
-                td2.innerHTML = genre;
-                td3.innerHTML = weightOfGame;
-                td4.innerHTML = conditionOfGame;
-                td5.innerHTML = maturityLevel;
-                td6.innerHTML = numberOfPlayers;
-                td7.innerHTML = playtimeInMinutes;
-                td8.innerHTML = tags;
+                td1.innerHTML = games[i].title;
+                td2.innerHTML = games[i].genre;
+                td3.innerHTML = games[i].weight;
+                td4.innerHTML = games[i].condition;
+                td5.innerHTML = games[i].maturity;
+                td6.innerHTML = games[i].players;
+                td7.innerHTML = games[i].time;
+                td8.innerHTML = games[i].tags;
 
                 row.appendChild(td1);
                 row.appendChild(td2);
@@ -416,23 +426,21 @@
 
                 table.children[0].insertBefore(row, table.children[0].childNodes[2]);
 
-                //All rows are centered and have 10px padding
-                var tableRows = document.getElementsByTagName("tr");
-                var j;
-                for (j = 0; j < tableRows.length; j++) {
-                    tableRows[j].style.textAlign = "center";
-                    tableRows[j].style.padding = "10px";
+                //Each new row adjusts to center the information added
+                let tableRows = document.getElementsByTagName("tr");
+                for (let i = 0; i < tableRows.length; i++) {
+                    tableRows[i].style.textAlign = "center";
                 }
 
                 //Add edit button to each row created
-                var editButton = document.createElement("button");
+                let editButton = document.createElement("button");
                 editButton.innerHTML = "Edit";
                 editButton.setAttribute("onclick", "editRow(this)");
                 editButton.setAttribute("class", "editButton");
                 row.appendChild(editButton);
 
                 //Add delete button to each row created
-                var deleteButton = document.createElement("button");
+                let deleteButton = document.createElement("button");
                 deleteButton.innerHTML = "Delete";
                 deleteButton.setAttribute("onclick", "deleteRow(this)");
                 deleteButton.setAttribute("class", "deleteButton");
@@ -455,125 +463,125 @@
     <form class="card-content" id="create-game-form">
         <p class="form-field">
             <label>Title</label>
-            <input required type="text" class="validated-field" id="create-game-gametitle">
+            <label for="create-game-gametitle"></label><input type="text" required class="validated-field" id="create-game-gametitle">
             <label>Genre</label>
-            <select required id="create-game-genre">
-                <option value="">--Choose A Genre--</option>
-                <option value="Action">Action</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Arcade">Arcade</option>
-                <option value="Board">Board</option>
-                <option value="Card">Card</option>
-                <option value="Casino">Casino</option>
-                <option value="Casual">Casual</option>
-                <option value="Educational">Educational</option>
-                <option value="Family">Family</option>
-                <option value="Music">Music</option>
-                <option value="Puzzle">Puzzle</option>
-                <option value="Racing">Racing</option>
-                <option value="Role Playing">Role Playing</option>
-                <option value="Simulation">Simulation</option>
-                <option value="Sports">Sports</option>
-                <option value="Strategy">Strategy</option>
-                <option value="Trivia">Trivia</option>
-                <option value="Word">Word</option>
-            </select>
+            <label for="create-game-genre"></label><select required id="create-game-genre">
+            <option value="">--Choose A Genre--</option>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Arcade">Arcade</option>
+            <option value="Board">Board</option>
+            <option value="Card">Card</option>
+            <option value="Casino">Casino</option>
+            <option value="Casual">Casual</option>
+            <option value="Educational">Educational</option>
+            <option value="Family">Family</option>
+            <option value="Music">Music</option>
+            <option value="Puzzle">Puzzle</option>
+            <option value="Racing">Racing</option>
+            <option value="Role Playing">Role Playing</option>
+            <option value="Simulation">Simulation</option>
+            <option value="Sports">Sports</option>
+            <option value="Strategy">Strategy</option>
+            <option value="Trivia">Trivia</option>
+            <option value="Word">Word</option>
+        </select>
             <label>Weight of Game</label>
-            <select required id="create-game-weightofgame">
-                <option value="">--Choose Weight of Game--</option>
-                <option value="Light">Light</option>
-                <option value="Medium Light">Medium Light</option>
-                <option value="Medium">Medium</option>
-                <option value="Medium Heavy">Medium Heavy</option>
-                <option value="Heavy">Heavy</option>
-            </select>
+            <label for="create-game-weightofgame"></label><select required id="create-game-weightofgame">
+            <option value="">--Choose Weight of Game--</option>
+            <option value="Light">Light</option>
+            <option value="Medium Light">Medium Light</option>
+            <option value="Medium">Medium</option>
+            <option value="Medium Heavy">Medium Heavy</option>
+            <option value="Heavy">Heavy</option>
+        </select>
             <label>Condition of Game</label>
-            <select required id="create-game-conditionofgame">
-                <option value="">--Choose Condition of Game--</option>
-                <option value="New">New</option>
-                <option value="Like New">Like New</option>
-                <option value="Good">Good</option>
-                <option value="Fair">Fair</option>
-                <option value="Poor">Poor</option>
-            </select>
+            <label for="create-game-conditionofgame"></label><select required id="create-game-conditionofgame">
+            <option value="">--Choose Condition of Game--</option>
+            <option value="New">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
+        </select>
             <label>Maturity Level</label>
-            <select required id="create-game-maturitylevel">
-                <option value="">--Choose Maturity Level--</option>
-                <option value="4+">4+</option>
-                <option value="8+">8+</option>
-                <option value="12+">12+</option>
-                <option value="16+">16+</option>
-            </select>
+            <label for="create-game-maturitylevel"></label><select required id="create-game-maturitylevel">
+            <option value="">--Choose Maturity Level--</option>
+            <option value="4+">4+</option>
+            <option value="8+">8+</option>
+            <option value="12+">12+</option>
+            <option value="16+">16+</option>
+        </select>
             <label># of Players</label>
-            <select required id="create-game-numberofplayers">
-                <option value="">--Choose # of Players--</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-            </select>
+            <label for="create-game-numberofplayers"></label><select required id="create-game-numberofplayers">
+            <option value="">--Choose # of Players--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
             <label>Playtime in Minutes</label>
-            <select required id="create-game-playtimeinminutes">
-                <option value="">--Choose Playtime--</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-                <option value="60">60</option>
-                <option value="75">75</option>
-                <option value="90">90</option>
-                <option value="105">105</option>
-                <option value="120">120</option>
-            </select>
+            <label for="create-game-playtimeinminutes"></label><select required id="create-game-playtimeinminutes">
+            <option value="">--Choose Playtime--</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+            <option value="60">60</option>
+            <option value="75">75</option>
+            <option value="90">90</option>
+            <option value="105">105</option>
+            <option value="120">120</option>
+        </select>
             <label>Tag</label>
-            <select required id="create-game-tags">
-                <option value="">--Choose Tag--</option>
-                <option value="Cooperative">Cooperative</option>
-                <option value="Competitive">Competitive</option>
-                <option value="Solo">Solo</option>
-                <option value="Party">Party</option>
-                <option value="Family">Family</option>
-                <option value="Abstract">Abstract</option>
-                <option value="Dexterity">Dexterity</option>
-                <option value="Dice">Dice</option>
-                <option value="Card">Card</option>
-                <option value="Deck Building">Deck Building</option>
-                <option value="Hand Management">Hand Management</option>
-                <option value="Worker Placement">Worker Placement</option>
-                <option value="Tile Placement">Tile Placement</option>
-                <option value="Area Control">Area Control</option>
-                <option value="Area Influence">Area Influence</option>
-                <option value="Area Movement">Area Movement</option>
-                <option value="Grid Movement">Grid Movement</option>
-                <option value="Set Collection">Set Collection</option>
-                <option value="Pattern Building">Pattern Building</option>
-                <option value="Memory">Memory</option>
-                <option value="Auction">Auction</option>
-                <option value="Bluffing">Bluffing</option>
-                <option value="Betting">Betting</option>
-                <option value="Campaign">Campaign</option>
-                <option value="Modular Board">Modular Board</option>
-                <option value="Paper and Pencil">Paper and Pencil</option>
-                <option value="Partnerships">Partnerships</option>
-                <option value="Pattern Building">Pattern Building</option>
-                <option value="Pick-up and Deliver">Pick-up and Deliver</option>
-                <option value="Player Elimination">Player Elimination</option>
-                <option value="Point to Point Movement">Point to Point Movement</option>
-                <option value="Press Your Luck">Press Your Luck</option>
-                <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
-                <option value="Roll / Spin and Move">Roll / Spin and Move</option>
-                <option value="Secret Unit Deployment">Secret Unit Deployment</option>
-                <option value="Simulation">Simulation</option>
-                <option value="Simultaneous Action Selection">Simultaneous Action Selection</option>
-                <option value="Storytelling">Storytelling</option>
-                <option value="Take That">Take That</option>
-                <option value="Time Track">Time Track</option>
-                <option value="Trading">Trading</option>
-                <option value="Variable Player Powers">Variable Player Powers</option>
-                <option value="Voting">Voting</option>
-                <option value="Worker Placement">Worker Placement</option>
-            </select>
+            <label for="create-game-tags"></label><select required id="create-game-tags">
+            <option value="">--Choose Tag--</option>
+            <option value="Cooperative">Cooperative</option>
+            <option value="Competitive">Competitive</option>
+            <option value="Solo">Solo</option>
+            <option value="Party">Party</option>
+            <option value="Family">Family</option>
+            <option value="Abstract">Abstract</option>
+            <option value="Dexterity">Dexterity</option>
+            <option value="Dice">Dice</option>
+            <option value="Card">Card</option>
+            <option value="Deck Building">Deck Building</option>
+            <option value="Hand Management">Hand Management</option>
+            <option value="Worker Placement">Worker Placement</option>
+            <option value="Tile Placement">Tile Placement</option>
+            <option value="Area Control">Area Control</option>
+            <option value="Area Influence">Area Influence</option>
+            <option value="Area Movement">Area Movement</option>
+            <option value="Grid Movement">Grid Movement</option>
+            <option value="Set Collection">Set Collection</option>
+            <option value="Pattern Building">Pattern Building</option>
+            <option value="Memory">Memory</option>
+            <option value="Auction">Auction</option>
+            <option value="Bluffing">Bluffing</option>
+            <option value="Betting">Betting</option>
+            <option value="Campaign">Campaign</option>
+            <option value="Modular Board">Modular Board</option>
+            <option value="Paper and Pencil">Paper and Pencil</option>
+            <option value="Partnerships">Partnerships</option>
+            <option value="Pattern Building">Pattern Building</option>
+            <option value="Pick-up and Deliver">Pick-up and Deliver</option>
+            <option value="Player Elimination">Player Elimination</option>
+            <option value="Point to Point Movement">Point to Point Movement</option>
+            <option value="Press Your Luck">Press Your Luck</option>
+            <option value="Rock-Paper-Scissors">Rock-Paper-Scissors</option>
+            <option value="Roll / Spin and Move">Roll / Spin and Move</option>
+            <option value="Secret Unit Deployment">Secret Unit Deployment</option>
+            <option value="Simulation">Simulation</option>
+            <option value="Simultaneous Action Selection">Simultaneous Action Selection</option>
+            <option value="Storytelling">Storytelling</option>
+            <option value="Take That">Take That</option>
+            <option value="Time Track">Time Track</option>
+            <option value="Trading">Trading</option>
+            <option value="Variable Player Powers">Variable Player Powers</option>
+            <option value="Voting">Voting</option>
+            <option value="Worker Placement">Worker Placement</option>
+        </select>
         </p>
         <button onclick="publishToTable()">Add</button>
     </form>
@@ -585,13 +593,13 @@
             <thead>
             <tr>
                 <th>Title</th>
-                <th>Genre</th>
-                <th>Weight of Game</th>
-                <th>Condition of Game</th>
-                <th>Maturity Level</th>
-                <th># of Players</th>
-                <th>Playtime in Minutes</th>
-                <th>Tags</th>
+                <th style="width: 150px">Genre</th>
+                <th style="width: 150px">Weight of Game</th>
+                <th style="width: 150px">Condition of Game</th>
+                <th style="width: 150px">Maturity Level</th>
+                <th style="width: 150px"># of Players</th>
+                <th style="width: 150px">Playtime in Minutes</th>
+                <th style="width: 150px">Tags</th>
             </tr>
             </thead>
         </table>
