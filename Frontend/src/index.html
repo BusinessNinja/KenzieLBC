@@ -120,15 +120,15 @@
         for (b = 0; b < cells.length; b++) {
             let cell = cells[b];
             let content = cell.innerHTML;
-            options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
+            let options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
                 "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
-            options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
-            options3 = ["New", "Like New", "Good", "Fair", "Poor"];
-            options4 = ["4+", "8+", "12+", "16+"];
-            options5 = ["1", "2", "3", "4", "5", "6"];
-            options6 = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80",
+            let options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
+            let options3 = ["New", "Like New", "Good", "Fair", "Poor"];
+            let options4 = ["4+", "8+", "12+", "16+"];
+            let options5 = ["1", "2", "3", "4", "5", "6"];
+            let options6 = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80",
                 "85", "90", "95", "100", "105", "110", "115", "120"];
-            options7 = ["Cooperative", "Competitive", "Solo", "Party", "Family", "Abstract", "Dexterity", "Dice", "Card",
+            let options7 = ["Cooperative", "Competitive", "Solo", "Party", "Family", "Abstract", "Dexterity", "Dice", "Card",
                 "Deck Building", "Hand Management", "Worker Placement", "Tile Placement", "Area Control", "Area Influence",
                 "Area Movement", "Grid Movement", "Set Collection", "Pattern Building", "Memory", "Auction", "Bluffing",
                 "Betting", "Campaign", "Modular Board", "Paper and Pencil", "Partnerships", "Pattern Building",
@@ -300,20 +300,7 @@
             for (m = 0; m < l.length; m++) {
                 l[m].style.display = "none";
             }
-            //All changed fields revert back to default
-            let table = document.getElementById("table");
-            let rows = table.rows;
-            let i;
-            for (i = 1; i < rows.length; i++) {
-                let row = rows[i];
-                let cells = row.cells;
-                let j;
-                for (j = 0; j < cells.length; j++) {
-                    let cell = cells[j];
-                    let content = cell.getAttribute("data-default");
-                    cell.innerHTML = content;
-                }
-            }
+            location.reload();
         }
     }
 </script>
@@ -327,11 +314,12 @@
             for (i = 0; i < tableRows.length; i++) {
                 tableRows[i].style.textAlign = "center";
             }
-            //delete from local storage
-            let list = localStorage.getItem("list");
-            list = JSON.parse(list);
-            let game = list.filter(item => item.key !== r.parentNode)
-            localStorage.removeItem(game);
+
+            let games = JSON.parse(localStorage.getItem("games"));
+            let gameName = r.parentNode.name;
+            let gameIndex = games.findIndex(game => game.gameTitle === gameName);
+            games.splice(gameIndex, 1);
+            localStorage.setItem("games", JSON.stringify(games));
         }
     }
 </script>
@@ -359,33 +347,34 @@
             l[m].style.display = "none";
         }
 
-        // changes made to fields are saved and displayed to the table
-        // all fields are no longer editable
-        let row = r.parentNode.parentNode;
+        //changed fields are saved to the table
+        let row = r.parentNode;
         let cells = row.cells;
         let i;
         for (i = 0; i < cells.length; i++) {
             let cell = cells[i];
-            let content = cell.innerHTML;
-            if (cell.getAttribute("data-default") !== content) {
-                cell.setAttribute("data-default", content);
-            }
+            let content = cell.firstChild.value;
+            cell.setAttribute("data-default", content);
+            cell.innerHTML = content;
         }
-        let game = {
-            key: row,
-            gameTitle: row.cells[0].innerHTML,
-            genre: row.cells[1].innerHTML,
-            weightOfGame: row.cells[2].innerHTML,
-            conditionOfGame: row.cells[3].innerHTML,
-            maturityLevel: row.cells[4].innerHTML,
-            numberOfPlayers: row.cells[5].innerHTML,
-            playtimeInMinutes: row.cells[6].innerHTML,
-            tags: row.cells[7].innerHTML,
-        }
-        let list = localStorage.getItem("list");
-        list = JSON.parse(list);
-        list.push(game);
-        localStorage.setItem("list", JSON.stringify(list));
+        //retrieves the stored value within key "games" and parses it into an array
+        //updates the array with the new values shared from the table by splicing the array
+        //stringifies the array and stores it back into key "games"
+        let games = JSON.parse(localStorage.getItem("games"));
+        let gameName = r.parentNode.name;
+        let gameIndex = games.findIndex(game => game.title === gameName);
+        let updatedGame = {
+            title: cells[0].innerHTML,
+            genre: cells[1].innerHTML,
+            weight: cells[2].innerHTML,
+            condition: cells[3].innerHTML,
+            maturity: cells[4].innerHTML,
+            players: cells[5].innerHTML,
+            time: cells[6].innerHTML,
+            tags: cells[7].innerHTML
+        };
+        games.splice(gameIndex, 1, updatedGame);
+        localStorage.setItem("games", JSON.stringify(games));
     }
 </script>
 <script>
