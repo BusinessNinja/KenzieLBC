@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <script type="text/javascript" src="gamePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Game Page</title>
 </head>
 <script>
     function publishToTable() {
@@ -83,6 +84,7 @@
         deleteButton.innerHTML = "Delete";
         deleteButton.setAttribute("onclick", "deleteRow(this)");
         deleteButton.setAttribute("class", "deleteButton");
+        deleteButton.setAttribute("data-index", "");
         row.appendChild(deleteButton);
 
     }
@@ -438,13 +440,367 @@
         }
     }
 </script>
-<body class="background" onload="displayGames()">
+<script>
+    function sortByTitle() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[[0]];
+                let y = rows[i + 1].getElementsByTagName("TD")[0];
+                let xValue = x.innerHTML.toLowerCase();
+                let yValue = y.innerHTML.toLowerCase();
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByGenre() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[1];
+                let y = rows[i + 1].getElementsByTagName("TD")[1];
+                let xValue = x.innerHTML.toLowerCase();
+                let yValue = y.innerHTML.toLowerCase();
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByWeight() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[2];
+                let y = rows[i + 1].getElementsByTagName("TD")[2];
+                let xValue = x.innerHTML.toLowerCase();
+                let yValue = y.innerHTML.toLowerCase();
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByCondition() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[3];
+                let y = rows[i + 1].getElementsByTagName("TD")[3];
+                let xValue = x.innerHTML.toLowerCase();
+                let yValue = y.innerHTML.toLowerCase();
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByMaturity() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[4];
+                let y = rows[i + 1].getElementsByTagName("TD")[4];
+                let xValue = parseInt(x.innerHTML);
+                let yValue = parseInt(y.innerHTML);
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByPlayers() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[5];
+                let y = rows[i + 1].getElementsByTagName("TD")[5];
+                let xValue = parseInt(x.innerHTML);
+                let yValue = parseInt(y.innerHTML);
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByPlaytime() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[6];
+                let y = rows[i + 1].getElementsByTagName("TD")[6];
+                let xValue = parseInt(x.innerHTML);
+                let yValue = parseInt(y.innerHTML);
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function sortByTags() {
+        let table = document.getElementById("table");
+        let rows = table.rows;
+        let switching = true;
+        let shouldSwitch;
+        let dir = "asc";
+        let switchCount = 0;
+        while (switching) {
+            switching = false;
+            let i;
+            for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
+                let x = rows[i].getElementsByTagName("TD")[7];
+                let y = rows[i + 1].getElementsByTagName("TD")[7];
+                let xValue = x.innerHTML.toLowerCase();
+                let yValue = y.innerHTML.toLowerCase();
+                if (dir === "asc") {
+                    if (xValue > yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (xValue < yValue) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchCount++;
+            } else {
+                if (switchCount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+<script>
+    function filter() {
+        let input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<body class="background" onload="displayGames();">
 <header class="header" id="header">
     <div class="site-title">
         <a class="header_home" href="index.html">iAmBoard</a>
-    </div>
-    <div>
-        <a href="search.html"><button>Go to Search Page</button></a>
     </div>
 </header>
 <div class="card">
@@ -576,19 +932,20 @@
     </form>
 </div>
 <div class="card">
-    <div id="tables">
-        <h2>Current Library</h2>
+    <div id="tables" class="tooltip">
+        <h2>Game Library</h2>
+        <label for="myInput"></label><input type="text" id="myInput" onkeyup="filter()" placeholder="Search for Games..">
         <table id="table">
             <thead>
             <tr>
-                <th>Title</th>
-                <th style="width: 150px">Genre</th>
-                <th style="width: 150px">Weight of Game</th>
-                <th style="width: 150px">Condition of Game</th>
-                <th style="width: 150px">Maturity Level</th>
-                <th style="width: 150px"># of Players</th>
-                <th style="width: 150px">Playtime in Minutes</th>
-                <th style="width: 150px">Tags</th>
+                <th onclick="sortByTitle()">Title</th>
+                <th onclick="sortByGenre()" style="width: 150px">Genre</th>
+                <th onclick="sortByWeight()" style="width: 150px">Weight of Game</th>
+                <th onclick="sortByCondition()" style="width: 150px">Condition of Game</th>
+                <th onclick="sortByMaturity()" style="width: 150px">Maturity Level</th>
+                <th onclick="sortByPlayers()" style="width: 150px"># of Players</th>
+                <th onclick="sortByPlaytime()" style="width: 150px">Playtime in Minutes</th>
+                <th onclick="sortByTags()" style="width: 150px">Tags</th>
             </tr>
             </thead>
         </table>
