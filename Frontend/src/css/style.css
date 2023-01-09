@@ -111,11 +111,13 @@ th {
     border-radius: 8px;
     padding: 0 20px;
     background-color: rgba(135, 50, 0, 0.5);
+    display: flex;
+    align-items: center;
     width: 25%;
 }
 
 .headers {
-    width: 90%;
+    width: 89%;
 }
 
 tr {
@@ -128,6 +130,8 @@ td {
     padding: 0 20px;
     background-color: rgba(135, 50, 0, 0.5);
     border-radius: 8px;
+    align-items: center;
+    display: flex;
     width: 100%;
 }
 

@@ -95,6 +95,7 @@
         //If a row is already being edited, the user must finish editing that row before editing another
         //Only the row the edit button is clicked on will be editable
         let x = document.getElementsByClassName("editButton");
+        let index = r.getAttribute("data-index");
         let i;
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
@@ -266,7 +267,7 @@
         saveButton.innerHTML = "Save";
         saveButton.setAttribute("onclick", "saveRow(this)");
         saveButton.setAttribute("class", "saveButton");
-        saveButton.setAttribute("data-index", i);
+        saveButton.setAttribute("data-index", index);
         row.appendChild(saveButton);
 
         //Add cancel button to each row being edited
@@ -324,7 +325,24 @@
     }
 </script>
 <script>
+    function updateArrayElement(arrayKey, index, newValue) {
+        console.log("updateArrayElement called");
+
+        console.log("arrayKey: ", arrayKey);  // log arrayKey value to console
+        console.log("index: ", index);  // log index value to console
+
+        // Get the array from local storage
+        let array = JSON.parse(localStorage.getItem(arrayKey));
+        console.log("array: ", array);
+        // Update the element at the specified index
+        array[index] = newValue;
+        // Save the updated array back to local storage
+        localStorage.setItem(arrayKey, JSON.stringify(array));
+    }
+</script>
+<script>
     function saveRow(r) {
+        console.log("saveRow called");
         // edit and delete buttons are re-added back to original location
         let x = document.getElementsByClassName("editButton");
         let a;
@@ -348,6 +366,8 @@
         }
 
         let row = r.parentNode;
+        console.log("r: ", r);
+
         let cells = row.cells;
         let i;
         for (i = 0; i < cells.length; i++) {
@@ -357,12 +377,11 @@
             cell.innerHTML = content;
         }
 
-        let games = JSON.parse(localStorage.getItem("games"));
         let gameIndex = r.getAttribute("data-index");
-
-        games.splice(gameIndex, 1);
-        // Add updated element
-        games.splice(gameIndex, 0, {
+        console.log("gameIndex: ", gameIndex);
+        // let games = JSON.parse(localStorage.getItem("games"));
+        // games.splice(gameIndex, 1);  // delete the element at gameIndex
+        updateArrayElement("games", gameIndex, {
             title: cells[0].innerHTML,
             genre: cells[1].innerHTML,
             weight: cells[2].innerHTML,
@@ -372,7 +391,6 @@
             time: cells[6].innerHTML,
             tags: cells[7].innerHTML
         });
-        localStorage.setItem("games", JSON.stringify(games));
     }
 </script>
 <script>
@@ -937,13 +955,13 @@
             <thead>
             <tr class="headers">
                 <th onclick="sortByTitle()">Title</th>
-                <th onclick="sortByGenre()" style="width: 150px">Genre</th>
-                <th onclick="sortByWeight()" style="width: 150px">Weight of Game</th>
-                <th onclick="sortByCondition()" style="width: 150px">Condition of Game</th>
-                <th onclick="sortByMaturity()" style="width: 150px">Maturity Level</th>
-                <th onclick="sortByPlayers()" style="width: 150px"># of Players</th>
-                <th onclick="sortByPlaytime()" style="width: 150px">Playtime in Minutes</th>
-                <th onclick="sortByTags()" style="width: 150px">Tags</th>
+                <th onclick="sortByGenre()">Genre</th>
+                <th onclick="sortByWeight()">Weight of Game</th>
+                <th onclick="sortByCondition()">Condition of Game</th>
+                <th onclick="sortByMaturity()">Maturity Level</th>
+                <th onclick="sortByPlayers()"># of Players</th>
+                <th onclick="sortByPlaytime()">Playtime in Minutes</th>
+                <th onclick="sortByTags()">Tags</th>
             </tr>
             </thead>
         </table>
