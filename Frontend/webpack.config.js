@@ -39,11 +39,6 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
-      new HtmlWebpackPlugin({
-        template: './src/search.html',
-        filename: 'search.html',
-        inject: false
-      }),
     new CopyPlugin({
       patterns: [
         {

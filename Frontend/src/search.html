@@ -1,59 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Search</title>
     <script type="text/javascript" src="gamePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<script>
-    function searchToTable(document, searchString) {
-        let index = document.indexOf(searchString);
-        if (index === -1) {
-            return 'Search string not found';
-        } else {
-            return `Search string found at index ${index}`;
-        }
-    }
-    let document = 'This is a sample document';
-    let searchString = 'sample';
-    console.log(searchDocument(document, searchString));
-</script>
 <body class="background">
 <header class="header" id="header">
     <div class="site-title">
         <a class="header_home" href="search.html">iAmBoard</a>
     </div>
     <div>
-        <a href="index.html"><button>Go to Index Page</button></a>
+        <a href="index.html">
+            <button>Go to Index Page</button>
+        </a>
     </div>
 </header>
 <div class="card">
     <h2>Search By</h2>
-    <form class="card-content" id="get-by-id-form">
-        <p class="form-field">
-            <label>Title</label>
-            <input type="text" required class="validated-field" id="id-field">
-        </p>
-        <button onclick="searchToTable()">Search</button>
+    <form id="search-form">
+        <label for="search-string">Title</label><br>
+        <input type="text" id="search-string"><br>
+        <button type="button" onclick="search()">Search</button>
     </form>
+    <br>
 </div>
 <div class="card" id="result">
     <h2>Search Results</h2>
-    <table id="table">
+    <table id="results">
         <thead>
         <tr>
             <th>Title</th>
-            <th>Genre</th>
-            <th>Weight of Game</th>
-            <th>Condition of Game</th>
-            <th>Maturity Level</th>
-            <th># of Players</th>
-            <th>Playtime in Minutes</th>
-            <th>Tags</th>
+            <th style="width: 150px">Genre</th>
+            <th style="width: 150px">Weight of Game</th>
+            <th style="width: 150px">Condition of Game</th>
+            <th style="width: 150px">Maturity Level</th>
+            <th style="width: 150px"># of Players</th>
+            <th style="width: 150px">Playtime in Minutes</th>
+            <th style="width: 150px">Tags</th>
         </tr>
         </thead>
+        <tbody id="results-body">
+
+        </tbody>
     </table>
-    <!--        <p id="result-info"></p>-->
 </div>
 </body>
 </html>
+<script>
+    function search() {
+        let searchString = document.getElementById("search-string").value;
+        let tbody = document.getElementById("results-body");
+        tbody.innerHTML = "";
+
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            let value = localStorage.getItem(key);
+            if (value.includes(searchString)) {
+                let row = tbody.insertRow();
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                let cell4 = row.insertCell(3);
+                let cell5 = row.insertCell(4);
+                let cell6 = row.insertCell(5);
+                let cell7 = row.insertCell(6);
+                let cell8 = row.insertCell(7);
+                cell1.innerHTML = value.title;
+                cell2.innerHTML = value.genre;
+                cell3.innerHTML = value.weight;
+                cell4.innerHTML = value.condition;
+                cell5.innerHTML = value.maturity;
+                cell6.innerHTML = value.players;
+                cell7.innerHTML = value.time;
+                cell8.innerHTML = value.tags;
+                console.log(searchString);
+                console.log(value.title);
+
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
+                row.appendChild(cell4);
+                row.appendChild(cell5);
+                row.appendChild(cell6);
+                row.appendChild(cell7);
+                row.appendChild(cell8);
+
+                tbody.children[0].insertBefore(row, tbody.children[0].childNodes[2]);
+
+
+                //Each new row adjusts to center the information added
+                let tableRows = document.getElementsByTagName("tr");
+                for (let i = 0; i < tableRows.length; i++) {
+                    tableRows[i].style.textAlign = "center";
+                }
+
+                //Add edit button to each row created
+                let editButton = document.createElement("button");
+                editButton.innerHTML = "Edit";
+                editButton.setAttribute("onclick", "editRow(this)");
+                editButton.setAttribute("class", "editButton");
+                row.appendChild(editButton);
+
+                //Add delete button to each row created
+                let deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "Delete";
+                deleteButton.setAttribute("onclick", "deleteRow(this)");
+                deleteButton.setAttribute("class", "deleteButton");
+                row.appendChild(deleteButton);
+            }
+        }
+    }
+</script>
