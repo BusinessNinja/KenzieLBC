@@ -1,13 +1,14 @@
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #FFA500;
+    --primary-color: #234257;
     --secondary-color: #222222;
     --error-color: #FF0000;
 }
 
 .background {
-    background-color: #222222;
-    margin: 10px;
+    background-image: url(https://www.cnet.com/a/img/resize/c8cce0021ae26d1b7472930e19da0cbe2316472c/hub/2014/11/16/3f546a04-9997-4126-a6ae-14c58c3a210e/dogsdandd.jpg?auto=webp&fit=crop&height=675&width=1200);
+    background-size: cover;
+    margin: 20px;
     counter-reset: section;
 }
 
@@ -16,9 +17,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
+    background-image: linear-gradient(to top, #234257, #89b2ae);
+    opacity: 0.82;
     color: var(--secondary-color);
-    padding: 0 20px;
+    padding: 0 30px;
     border-radius: 25px;
 }
 
@@ -43,9 +45,8 @@
 
 .button, button {
     border-radius: 3px;
-    text-decoration: none;
-    border: 1px solid black;
-    background: #222 url(/images/alert-overlay.png) repeat-x;
+    border: 1.5px solid black;
+    background: #222 repeat-x;
     display: inline-block;
     padding: 5px 10px 6px;
     color: #fff;
@@ -67,7 +68,9 @@
 
 .card {
     color: #000000;
-    background-color: #FFA500;
+    backdrop-filter: blur(14px);
+    opacity: .85;
+    background-image: linear-gradient(to top, #234257, #89b2ae 70%);
     margin: 30px;
     padding: 10px 20px;
     border-radius: 25px;
@@ -109,11 +112,12 @@ thead {
 th {
     cursor: pointer;
     border-radius: 8px;
-    padding: 0 20px;
-    background-color: rgba(135, 50, 0, 0.5);
+    padding: 0 30px;
+    border: 1px solid black;
+    background-image: linear-gradient(to bottom, #dddddd, #607d8b);
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 10%;
 }
 
 .headers {
@@ -121,15 +125,16 @@ th {
 }
 
 tr {
-    margin: 10px 0;
+    margin: 10px 0px;
     display: flex;
     width: 100%;
 }
 
 td {
     padding: 0 20px;
-    background-color: rgba(135, 50, 0, 0.5);
-    border-radius: 8px;
+    border: 1px solid black;
+    background-image: linear-gradient(to bottom, #dddddd, #607d8b);
+    border-radius: 7px;
     align-items: center;
     display: flex;
     width: 100%;
@@ -167,4 +172,3 @@ td button {
 
 #myTable tr.header, #myTable tr:hover {
     background-color: #f1f1f1;
-}
