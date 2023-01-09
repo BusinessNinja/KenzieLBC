@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <script type="text/javascript" src="gamePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <title>Game Page</title>
 </head>
 <script>
     function publishToTable() {
@@ -65,6 +64,7 @@
         }
         games.push(game);
         localStorage.setItem("games", JSON.stringify(games));
+        location.reload();
 
         //Each new row adjusts to center the information added
         let tableRows = document.getElementsByTagName("tr");
@@ -77,6 +77,7 @@
         editButton.innerHTML = "Edit";
         editButton.setAttribute("onclick", "editRow(this)");
         editButton.setAttribute("class", "editButton");
+        editButton.setAttribute("data-index", i);
         row.appendChild(editButton);
 
         //Add delete button to each row created
@@ -84,9 +85,8 @@
         deleteButton.innerHTML = "Delete";
         deleteButton.setAttribute("onclick", "deleteRow(this)");
         deleteButton.setAttribute("class", "deleteButton");
-        deleteButton.setAttribute("data-index", "");
+        deleteButton.setAttribute("data-index", i);
         row.appendChild(deleteButton);
-
     }
 </script>
 <script>
@@ -124,7 +124,7 @@
             let content = cell.innerHTML;
             let options1 = ["Action", "Adventure", "Arcade", "Board", "Card", "Casino", "Casual", "Educational", "Family",
                 "Music", "Puzzle", "Racing", "Role Playing", "Simulation", "Sports", "Strategy", "Trivia", "Word"];
-            let options2 = ["Light", "Medium Light","Medium", "Medium Heavy","Heavy"];
+            let options2 = ["Light", "Medium Light", "Medium", "Medium Heavy", "Heavy"];
             let options3 = ["New", "Like New", "Good", "Fair", "Poor"];
             let options4 = ["4+", "8+", "12+", "16+"];
             let options5 = ["1", "2", "3", "4", "5", "6"];
@@ -266,6 +266,7 @@
         saveButton.innerHTML = "Save";
         saveButton.setAttribute("onclick", "saveRow(this)");
         saveButton.setAttribute("class", "saveButton");
+        saveButton.setAttribute("data-index", i);
         row.appendChild(saveButton);
 
         //Add cancel button to each row being edited
@@ -278,9 +279,6 @@
 </script>
 <script>
     function cancelRow() {
-        //If user clicks "OK", the row is left as is
-        //Save and Cancel buttons are removed
-        //Edit and Delete buttons are added back to original location
         if (confirm("Are you sure you want to cancel? All changes will be lost.")) {
             let x = document.getElementsByClassName("editButton");
             let a;
@@ -318,10 +316,10 @@
             }
 
             let games = JSON.parse(localStorage.getItem("games"));
-            let gameName = r.parentNode.name;
-            let gameIndex = games.findIndex(game => game.gameTitle === gameName);
+            let gameIndex = r.getAttribute("data-index");
             games.splice(gameIndex, 1);
             localStorage.setItem("games", JSON.stringify(games));
+            location.reload();
         }
     }
 </script>
@@ -349,7 +347,6 @@
             l[m].style.display = "none";
         }
 
-        //changed fields are saved to the table
         let row = r.parentNode;
         let cells = row.cells;
         let i;
@@ -359,13 +356,13 @@
             cell.setAttribute("data-default", content);
             cell.innerHTML = content;
         }
-        //retrieves the stored value within key "games" and parses it into an array
-        //updates the array with the new values shared from the table by splicing the array
-        //stringifies the array and stores it back into key "games"
+
         let games = JSON.parse(localStorage.getItem("games"));
-        let gameName = r.parentNode.name;
-        let gameIndex = games.findIndex(game => game.title === gameName);
-        let updatedGame = {
+        let gameIndex = r.getAttribute("data-index");
+
+        games.splice(gameIndex, 1);
+        // Add updated element
+        games.splice(gameIndex, 0, {
             title: cells[0].innerHTML,
             genre: cells[1].innerHTML,
             weight: cells[2].innerHTML,
@@ -374,15 +371,12 @@
             players: cells[5].innerHTML,
             time: cells[6].innerHTML,
             tags: cells[7].innerHTML
-        };
-        games.splice(gameIndex, 1, updatedGame);
+        });
         localStorage.setItem("games", JSON.stringify(games));
     }
 </script>
 <script>
     function displayGames() {
-        //All games saved in local storage are displayed in the table
-        //Each row has an edit and delete button
         let table = document.getElementById("table");
         let games = JSON.parse(localStorage.getItem("games"));
         if (games !== null) {
@@ -428,6 +422,7 @@
                 editButton.innerHTML = "Edit";
                 editButton.setAttribute("onclick", "editRow(this)");
                 editButton.setAttribute("class", "editButton");
+                editButton.setAttribute("data-index", i);
                 row.appendChild(editButton);
 
                 //Add delete button to each row created
@@ -435,6 +430,7 @@
                 deleteButton.innerHTML = "Delete";
                 deleteButton.setAttribute("onclick", "deleteRow(this)");
                 deleteButton.setAttribute("class", "deleteButton");
+                deleteButton.setAttribute("data-index", i);
                 row.appendChild(deleteButton);
             }
         }
@@ -808,7 +804,8 @@
     <form class="card-content" id="create-game-form">
         <p class="form-field">
             <label>Title</label>
-            <label for="create-game-gametitle"></label><input type="text" required class="validated-field" id="create-game-gametitle">
+            <label for="create-game-gametitle"></label><input type="text" required class="validated-field"
+                                                              id="create-game-gametitle">
             <label>Genre</label>
             <label for="create-game-genre"></label><select required id="create-game-genre">
             <option value="">--Choose A Genre--</option>
@@ -932,12 +929,13 @@
     </form>
 </div>
 <div class="card">
-    <div id="tables" class="tooltip">
+    <div id="tables">
         <h2>Game Library</h2>
-        <label for="myInput"></label><input type="text" id="myInput" onkeyup="filter()" placeholder="Search for Games..">
+        <label for="myInput"></label><input type="text" id="myInput" onkeyup="filter()"
+                                            placeholder="Search for Games..">
         <table id="table">
             <thead>
-            <tr>
+            <tr class="headers">
                 <th onclick="sortByTitle()">Title</th>
                 <th onclick="sortByGenre()" style="width: 150px">Genre</th>
                 <th onclick="sortByWeight()" style="width: 150px">Weight of Game</th>
@@ -949,7 +947,6 @@
             </tr>
             </thead>
         </table>
-        <!--        <p id="result-info"></p>-->
     </div>
 </div>
 </body>
