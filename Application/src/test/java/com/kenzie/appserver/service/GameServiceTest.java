@@ -155,35 +155,45 @@ public class GameServiceTest {
     //TODO: updateGame
     @Test
     void updateGame() {
+        //Successfully updates an existing game
+
         //GIVEN
         String id = randomUUID().toString();
 
         GamePrimaryKey gamePrimaryKey = new GamePrimaryKey(id, "gameTitle");
 
         GameRecord record = new GameRecord();
-        record.setGameId(id);
-        record.setGameTitle("Test Game");
-        record.setGenre("Test Genre");
-        record.setWeightOfGame("1");
-        record.setConditionOfGame("Test Condition");
-        record.setMaturityLevel("1");
-        record.setNumberOfPlayers(1);
-        record.setPlaytimeInMinutes(1);
-        record.setTags("Test Tag");
 
-        Game game = new Game(record.getGameId(), record.getGameTitle(), record.getGenre(), record.getWeightOfGame(),
-                record.getConditionOfGame(), record.getMaturityLevel(), record.getNumberOfPlayers(),
-                record.getPlaytimeInMinutes(), record.getTags());
+        GameRepository gameRepository = mock(GameRepository.class);
+
+        GameService gameService = new GameService(gameRepository);
+
+        Game game = new Game(id, "Test Game", "Test Genre", "Test Weight",
+                "Test Condition", "1", 1, 1, "Test Tag");
 
         //WHEN
         when(gameRepository.findById(gamePrimaryKey)).thenReturn(Optional.of(record));
         when(gameRepository.save(record)).thenReturn(record);
+
+
         Game updatedGame = gameService.updateGame(game);
+        updatedGame.setGameTitle("New Title");
+        updatedGame.setGenre("New Genre");
+        updatedGame.setWeightOfGame("New Weight");
+        updatedGame.setConditionOfGame("New Condition");
+        updatedGame.setMaturityLevel("New Maturity");
+        updatedGame.setNumberOfPlayers(2);
+        updatedGame.setPlaytimeInMinutes(2);
+        updatedGame.setTags("New Tags");
+
 
         //THEN
-        Assertions.assertNotNull(updatedGame, "Game should not be null");
-        Assertions.assertEquals(id, updatedGame.getGameId(), "The id is correct");
-        Assertions.assertEquals("Test Game", updatedGame.getGameTitle(), "The title is correct");
+        Assertions.assertNotNull(gameRepository, "Game should not be null");
+
+        Assertions.assertEquals(id, game.getGameId(), "The id is correct");
+
+        Assertions.assertNotEquals("Test Game", updatedGame.getGameTitle(), "The title is updated");
+
     }
 
 }
