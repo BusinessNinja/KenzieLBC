@@ -16,7 +16,7 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/game")
-public class GameController{
+public class GameController {
 
     private GameService gameService;
 
@@ -60,26 +60,8 @@ public class GameController{
         gameResponse.setGameTitle(game.getGameTitle());
 
 
-
         return ResponseEntity.created(URI.create("/game/" + gameResponse.getGameId())).body(gameResponse);
     }
-
-
-    @PutMapping("/{gameId}")
-    public ResponseEntity.BodyBuilder editGame(@RequestBody Game updatedGame, @PathVariable("gameId") GamePrimaryKey gameId) {
-        Game game = gameService.findById(gameId);
-        game.setGameTitle(updatedGame.getGameTitle());
-        game.setGenre(updatedGame.getGenre());
-        game.setWeightOfGame(updatedGame.getWeightOfGame());
-        game.setConditionOfGame(updatedGame.getConditionOfGame());
-        game.setMaturityLevel(updatedGame.getMaturityLevel());
-        game.setNumberOfPlayers(updatedGame.getNumberOfPlayers());
-        game.setPlaytimeInMinutes(updatedGame.getPlaytimeInMinutes());
-        game.setTags(updatedGame.getTags());
-        gameService.updateGame(game);
-        return ResponseEntity.ok();
-    }
-
 
 
     private GameResponse gameToResponse(Game game) {

@@ -23,54 +23,41 @@ public class Game {
         this.tags = tags;
     }
 
-    public String getGameId() { return this.gameId; }
-
-    public String getGameTitle() { return this.gameTitle; }
-
-    public String getGenre() { return this.genre; }
-
-    public String getWeightOfGame() { return this.weightOfGame; }
-
-    public String getConditionOfGame() { return this.conditionOfGame; }
-
-    public String getMaturityLevel() { return this.maturityLevel; }
-
-    public Integer getNumberOfPlayers() { return this.numberOfPlayers; }
-
-    public Integer getPlaytimeInMinutes() { return this.playtimeInMinutes; }
-
-    public String getTags() { return this.tags; }
-
-
-    public void setGameTitle(String gameTitle) {
-        this.gameTitle = gameTitle;
+    public String getGameId() {
+        return this.gameId;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public String getGameTitle() {
+        return this.gameTitle;
     }
 
-    public void setWeightOfGame(String weightOfGame) {
-        this.weightOfGame = weightOfGame;
+    public String getGenre() {
+        return this.genre;
     }
 
-    public void setConditionOfGame(String conditionOfGame) {
-        this.conditionOfGame = conditionOfGame;
+    public String getWeightOfGame() {
+        return this.weightOfGame;
     }
 
-    public void setMaturityLevel(String maturityLevel) {
-        this.maturityLevel = maturityLevel;
+    public String getConditionOfGame() {
+        return this.conditionOfGame;
     }
 
-    public void setNumberOfPlayers(Integer numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
+    public String getMaturityLevel() {
+        return this.maturityLevel;
     }
 
-    public void setPlaytimeInMinutes(Integer playtimeInMinutes) {
-        this.playtimeInMinutes = playtimeInMinutes;
+    public Integer getNumberOfPlayers() {
+        return this.numberOfPlayers;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public Integer getPlaytimeInMinutes() {
+        return this.playtimeInMinutes;
     }
+
+    public String getTags() {
+        return this.tags;
+    }
+
+
 }
