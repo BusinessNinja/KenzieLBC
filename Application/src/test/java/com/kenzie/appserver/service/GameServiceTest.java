@@ -26,9 +26,12 @@ public class GameServiceTest {
         gameRepository = mock(GameRepository.class);
         gameService = new GameService(gameRepository);
     }
-    /** ------------------------------------------------------------------------
-     *  gameService.findById
-     *  ------------------------------------------------------------------------ **/
+
+    /**
+     * ------------------------------------------------------------------------
+     * gameService.findById
+     * ------------------------------------------------------------------------
+     **/
 
     @Test
     void findByGameId() {
@@ -65,82 +68,11 @@ public class GameServiceTest {
         Assertions.assertNull(game, "The game is null");
     }
 
-//    /** ------------------------------------------------------------------------
-//     *  gameService.findByTitle
-//     *  ------------------------------------------------------------------------ **/
-//
-//    @Test
-//    void findByGameTitle() {
-//        //GIVEN
-//        String title = "Test Game";
-//
-//        GameRecord record = new GameRecord();
-//        record.setGameId(randomUUID().toString());
-//        record.setGameTitle(title);
-//
-//        //WHEN
-//        when(gameRepository.findByGameTitle(title)).thenReturn(Optional.of(record));
-//        Game game = gameService.findByGameTitle(title);
-//
-//        //THEN
-//        Assertions.assertNotNull(game, "Game should not be null");
-//        Assertions.assertEquals(title, game.getGameTitle(), "The title is correct");
-//    }
-//
-//    @Test
-//    void findByGameTitle_invalidTitle() {
-//        //GIVEN
-//        String title = "";
-//
-//        when(gameRepository.findByGameTitle(title)).thenReturn(Optional.empty());
-//
-//        //WHEN
-//        Game game = gameService.findByGameTitle(title);
-//
-//        //THEN
-//        Assertions.assertNull(game, "The game is null");
-//    }
-//
-//    /** ------------------------------------------------------------------------
-//     *  gameService.findByGenre
-//     *  ------------------------------------------------------------------------ **/
-//
-//    @Test
-//    void findByGameGenre() {
-//        //GIVEN
-//        String genre = "Test Genre";
-//
-//        GameRecord record = new GameRecord();
-//        record.setGameId(randomUUID().toString());
-//        record.setGameTitle("Test Game");
-//        record.setGenre(genre);
-//
-//        //WHEN
-//        when(gameRepository.findByGenre(genre)).thenReturn(Optional.of(record));
-//        Game game = gameService.findByGenre(genre);
-//
-//        //THEN
-//        Assertions.assertNotNull(game, "Game should not be null");
-//        Assertions.assertEquals(genre, game.getGenre(), "The genre is correct");
-//    }
-//
-//    @Test
-//    void findByGameGenre_invalidGenre() {
-//        //GIVEN
-//        String genre = null;
-//
-//        when(gameRepository.findByGenre(genre)).thenReturn(Optional.empty());
-//
-//        //WHEN
-//        Game game = gameService.findByGenre(genre);
-//
-//        //THEN
-//        Assertions.assertNull(game, "The game is null");
-//    }
-
-    /** ------------------------------------------------------------------------
-     *  gameService.findALl
-     *  ------------------------------------------------------------------------ **/
+    /**
+     * ------------------------------------------------------------------------
+     * gameService.findALl
+     * ------------------------------------------------------------------------
+     **/
 
     @Test
     void findAll() {
@@ -178,9 +110,11 @@ public class GameServiceTest {
         Assertions.assertEquals(0, games.size(), "There are no games");
     }
 
-    /** ------------------------------------------------------------------------
-     *  gameService.addNewGame
-     *  ------------------------------------------------------------------------ **/
+    /**
+     * ------------------------------------------------------------------------
+     * gameService.addNewGame
+     * ------------------------------------------------------------------------
+     **/
     @Test
     void addNewGame() {
         //GIVEN
@@ -195,6 +129,7 @@ public class GameServiceTest {
         record.setMaturityLevel("1");
         record.setNumberOfPlayers(1);
         record.setPlaytimeInMinutes(1);
+        record.setTags("Test Tag");
 
         Game game = new Game(record.getGameId(), record.getGameTitle(), record.getGenre(), record.getWeightOfGame(),
                 record.getConditionOfGame(), record.getMaturityLevel(), record.getNumberOfPlayers(), record.getPlaytimeInMinutes(), record.getTags());
@@ -212,11 +147,43 @@ public class GameServiceTest {
     //TODO: addNewGame_invalidInput
 
 
-    /** ------------------------------------------------------------------------
-     *  gameService.updateGame
-     *  ------------------------------------------------------------------------ **/
+    /**
+     * ------------------------------------------------------------------------
+     * gameService.updateGame
+     * ------------------------------------------------------------------------
+     **/
     //TODO: updateGame
+    @Test
+    void updateGame() {
+        //GIVEN
+        String id = randomUUID().toString();
 
-    //TODO: updateGame_invalidGame
+        GamePrimaryKey gamePrimaryKey = new GamePrimaryKey(id, "gameTitle");
+
+        GameRecord record = new GameRecord();
+        record.setGameId(id);
+        record.setGameTitle("Test Game");
+        record.setGenre("Test Genre");
+        record.setWeightOfGame("1");
+        record.setConditionOfGame("Test Condition");
+        record.setMaturityLevel("1");
+        record.setNumberOfPlayers(1);
+        record.setPlaytimeInMinutes(1);
+        record.setTags("Test Tag");
+
+        Game game = new Game(record.getGameId(), record.getGameTitle(), record.getGenre(), record.getWeightOfGame(),
+                record.getConditionOfGame(), record.getMaturityLevel(), record.getNumberOfPlayers(),
+                record.getPlaytimeInMinutes(), record.getTags());
+
+        //WHEN
+        when(gameRepository.findById(gamePrimaryKey)).thenReturn(Optional.of(record));
+        when(gameRepository.save(record)).thenReturn(record);
+        Game updatedGame = gameService.updateGame(game);
+
+        //THEN
+        Assertions.assertNotNull(updatedGame, "Game should not be null");
+        Assertions.assertEquals(id, updatedGame.getGameId(), "The id is correct");
+        Assertions.assertEquals("Test Game", updatedGame.getGameTitle(), "The title is correct");
+    }
 
 }
